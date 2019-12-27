@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CarouselPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:BibliotecaXM"
+             x:Class="BibliotecaXM.MainPage"
+             Title="Home"
+             Padding="0,10,0,0">
+    <ContentPage>
+        <ContentPage.Padding>
+            <OnPlatform x:TypeArguments="Thickness">
+                <On Platform="iOS, Android" Value="0,40,0,0" />
+            </OnPlatform>
+        </ContentPage.Padding>
+        <StackLayout Padding="10,5,10,5" VerticalOptions="Start" Orientation="Vertical" >
+            <Label Text="Buscar:"
+                VerticalOptions="Fill" 
+                HorizontalOptions="Start" TextColor="Black"/>
+            <Entry VerticalOptions="Fill" 
+                HorizontalOptions="FillAndExpand" x:Name="EntBusca" MaxLength="100">
+            </Entry>
+            <Button Text="buscar" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" BackgroundColor="DarkBlue" x:Name="BtnBuscar" TextColor="White" FontSize="Medium" Margin="10, 10, 10, 10" Clicked="BtnBuscar_Clicked" />
+            <ActivityIndicator x:Name="ActivitySpinner" Color="Red" IsRunning="True" VerticalOptions="StartAndExpand" 
+                HorizontalOptions="CenterAndExpand"></ActivityIndicator>
+        </StackLayout>
+    </ContentPage>
+    <ContentPage>
+        <ContentPage.Padding>
+            <OnPlatform x:TypeArguments="Thickness">
+                <On Platform="iOS, Android" Value="0,40,0,0" />
+            </OnPlatform>
+        </ContentPage.Padding>
+        <StackLayout>
+            <Label Text="Red" FontSize="Medium" HorizontalOptions="Center" />
+            <BoxView Color="Red" WidthRequest="200" HeightRequest="200" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+        </StackLayout>
+    </ContentPage>
+
+</CarouselPage>
