@@ -9,23 +9,23 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Permissions;
+using System.Net.Http;
 
 namespace BL
 {
-    public class WsService
+    public class WsServiceLista
     {
-
         List<Book> Lista = new List<Book>();
+
         private int Total { get; set; }
 
-
-        public List<Book> WsBusca(string busca, int key, string buscakey, int indice)
+        public async Task<List<Book>> WsBusca(string busca, int key, string buscakey, int indice)
         {
+           
             StringBuilder urlBusca = new StringBuilder();
             urlBusca.Append($"https://www.googleapis.com/books/v1/volumes?&startIndex={indice}&q=");
             //
             urlBusca.Append(busca);
-
 
             switch (key)
             {
@@ -45,19 +45,20 @@ namespace BL
             }
 
             urlBusca.Append("&langRestrict=pt&key=AIzaSyAiqcLMIbWfBuTJCPA6AuEa-mUcPiZXS4E");
-
-            var requisicaoWeb = WebRequest.CreateHttp(urlBusca.ToString());
-            requisicaoWeb.Method = "GET";
-            requisicaoWeb.UserAgent = "RequisicaoWebDemo";
-
-            using (var resposta = requisicaoWeb.GetResponse())
+            try
             {
-                var streamDados = resposta.GetResponseStream();
-                StreamReader reader = new StreamReader(streamDados);
-                object objResponse = reader.ReadToEnd();
-                JsonBusca(objResponse.ToString());
-                streamDados.Close();
-                resposta.Close();
+                using (var http = new HttpClient())
+                {
+                    var requisicao = new HttpRequestMessage();
+                    requisicao.RequestUri = new Uri(urlBusca.ToString());
+                    requisicao.Method = HttpMethod.Get;
+                    var resposta = await http.SendAsync(requisicao);
+                    var conteudo = await resposta.Content.ReadAsStringAsync();
+                    JsonBusca(conteudo.ToString());
+                }
+            }catch(Exception ex)
+            {
+                throw ex;
             }
             return Lista;
         }
@@ -82,7 +83,7 @@ namespace BL
             {
                 livro = new Book();
 
-                livro.Id = items[i].Id;
+                livro.Id = items[i].id;
                 volumeInfo = items[i].volumeInfo;
 
                 livro.Title = volumeInfo.title;
@@ -92,7 +93,7 @@ namespace BL
                 //    livro.Subtitle = volumeInfo.subtitle;
                 //}
                 if (volumeInfo.ContainsKey("pageCount"))
-                {
+                {               
                     livro.PageCount = volumeInfo.pageCount;
                 }
                 if (volumeInfo.ContainsKey("imageLinks"))

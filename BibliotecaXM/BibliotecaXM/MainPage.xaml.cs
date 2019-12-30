@@ -9,8 +9,10 @@ using Xamarin.Forms;
 namespace BibliotecaXM
 {
     [DesignTimeVisible(true)]
-    public partial class MainPage : CarouselPage
+    public partial class MainPage : ContentPage
     {
+
+
 
         public MainPage()
         {
@@ -18,13 +20,21 @@ namespace BibliotecaXM
             ActivitySpinner.IsRunning = false;
         }
 
-        private async void BtnBuscar_Clicked(object sender, EventArgs e)
+        private void BtnBuscar_Clicked(object sender, EventArgs e)
         {
             ActivitySpinner.IsRunning = true;
-            string Busca = EntBusca.Text;
-            ListaLivros page = new ListaLivros(Busca);
-            await  this.Navigation.PushAsync(page);
-            ActivitySpinner.IsRunning = false;
-        }
+            BtnBuscar.IsEnabled = false;
+           Task.Run(() =>
+            {
+                string Busca = EntBusca.Text;
+                Device.BeginInvokeOnMainThread(() => {
+                    this.Navigation.PushAsync(new ListaLivros(Busca));
+                    ActivitySpinner.IsRunning = false;
+                    BtnBuscar.IsEnabled = true;
+                });
+            });
+   
+    
+        }        
     }
 }

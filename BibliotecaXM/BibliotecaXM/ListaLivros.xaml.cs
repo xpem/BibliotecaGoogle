@@ -13,9 +13,9 @@ namespace BibliotecaXM
 {
 
     [XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ListaLivros : ContentPage
-	{
-        private ObservableCollection<Book> Itenslista;
+    public partial class ListaLivros : ContentPage
+    {
+        public ObservableCollection<Book> Itenslista;
         bool isLoading;
 
         public bool IsLoading
@@ -29,18 +29,44 @@ namespace BibliotecaXM
         }
 
 
-        BL.WsService ws = new BL.WsService();
+        BL.WsServiceLista ws = new BL.WsServiceLista();
         int TotalItems { get; set; }
 
-        public ListaLivros (string Busca)
-		{
-			InitializeComponent ();
-         
+        public ListaLivros(string Busca)
+        {
+            BindingContext = this;
             int indice = 0;
             Itenslista = new ObservableCollection<Book>();
-            CarregaLista(Busca, indice);
+
+            InitializeComponent();
+
             LstLivros.ItemsSource = Itenslista;
 
+           CarregaLista(Busca, indice);
+           CarregaFuncaoSelecao(Busca, indice);
+        }
+
+        private async void CarregaLista(string Busca, int indice)
+        {
+            isLoading = true;
+            this.Title = "Loading";
+
+            foreach (Book book in await ws.WsBusca(Busca, 0, "", indice))
+            {
+                if (!string.IsNullOrEmpty(book.PageCount))
+                {
+                    book.PageCount += " páginas";
+                }
+
+                Itenslista.Add(book);
+            }
+
+            this.Title = "Done";
+            isLoading = false;
+        }
+
+        private void CarregaFuncaoSelecao(string Busca, int indice)
+        {
             LstLivros.ItemAppearing += (sender, e) =>
             {
                 if (isLoading || Itenslista.Count == 0)
@@ -55,21 +81,16 @@ namespace BibliotecaXM
             };
         }
 
-
-        private async Task CarregaLista(string Busca,int indice)
+        private void LstLivros_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            isLoading = true;
-            this.Title = "Loading";
-
-            foreach(Book book in  ws.WsBusca(Busca, 0, "", indice))
+            if (e.SelectedItem != null)
             {
-                book.PageCount += " páginas";
-                Itenslista.Add(book);
-            }
-            
-            this.Title = "Done";
-            isLoading = false;
-        }
+                Book book = new Book();
+                book = (Book)e.SelectedItem;
 
-	}
+                DetalhaLivros detalhaLivros = new DetalhaLivros(book.Id);
+                Navigation.PushAsync(detalhaLivros);
+            }
+        }
+    }
 }

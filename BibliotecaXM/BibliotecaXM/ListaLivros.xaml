@@ -4,37 +4,40 @@
              x:Class="BibliotecaXM.ListaLivros">
     <ContentPage.Content>
         <StackLayout BackgroundColor="#fff">
-            <ListView x:Name="LstLivros"  HasUnevenRows="True" SelectionMode="None" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <ListView x:Name="LstLivros"  HasUnevenRows="True" ItemSelected="LstLivros_ItemSelected" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="5">
-                                <Grid HorizontalOptions="FillAndExpand">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="15"/>
-                                        <RowDefinition Height="12"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="12"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition  Width ="4*" />
-                                        <ColumnDefinition  Width ="6*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Image Source="{Binding Thumbnail}"
-                                       Grid.RowSpan="6"  Aspect="AspectFit" WidthRequest="50"
-                                       HeightRequest="120" />
-                                    <Label  Text="{Binding Title}" Grid.Row="0" Grid.Column="1" VerticalTextAlignment="Start" FontSize="Micro" FontAttributes="Bold" />
-                                    <Label  Text="{Binding Authors}" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Row="1" Grid.Column="1" FontSize="Micro" FontAttributes="Italic"/>
-                                    <Label  Text="{Binding PageCount}" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Row="2" Grid.Column="1" FontSize="Micro"/>
-                                    <Label  Text="Editora:" Grid.Row="3"  HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Column="1" TextColor="Black" FontAttributes="Italic" FontSize="10"/>
-                                    <Label  Text="{Binding Publisher}" HorizontalTextAlignment="Start"  VerticalTextAlignment="Start" Grid.Row="4" Grid.Column="1" FontSize="Micro"/>
-                                    <Label  Text="Categoria:" Grid.Row="5"  HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Column="1" TextColor="Black" FontAttributes="Italic" FontSize="10"/>
-                                    <Label  Text="{Binding Categories}" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Row="6" Grid.Column="1" FontSize="Micro"/>
-                                </Grid>
-                            </StackLayout>
+                            <Frame Margin="5" BorderColor="Sienna">
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="5">
+                                    <Grid HorizontalOptions="FillAndExpand">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="12"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="12"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition  Width ="4*" />
+                                            <ColumnDefinition  Width ="6*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Image Source="{Binding Thumbnail}"
+                                       Grid.RowSpan="6"  Aspect="AspectFit" MinimumWidthRequest="50" WidthRequest="100"
+                                       HeightRequest="240" MinimumHeightRequest="120" />
+                                        <Label  Text="{Binding Title}" Grid.Row="0" Grid.Column="1" VerticalTextAlignment="Start" FontSize="Micro" FontAttributes="Bold" />
+                                        <Label  Text="{Binding Authors}" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Row="1" Grid.Column="1" FontSize="Micro" FontAttributes="Italic"/>
+                                        <Label  Text="{Binding PageCount}" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Row="2" Grid.Column="1" FontSize="Micro"/>
+                                        <Label  Text="Editora:" Grid.Row="3"  HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Column="1" TextColor="Black" FontAttributes="Italic" FontSize="10"/>
+                                        <Label  Text="{Binding Publisher}" HorizontalTextAlignment="Start"  VerticalTextAlignment="Start" Grid.Row="4" Grid.Column="1" FontSize="Micro"/>
+                                        <Label  Text="Categoria:" Grid.Row="5"  HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Column="1" TextColor="Black" FontAttributes="Italic" FontSize="10"/>
+                                        <Label  Text="{Binding Categories}" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Row="6" Grid.Column="1" FontSize="Micro"/>
+
+                                    </Grid>
+                                </StackLayout>
+                            </Frame>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
