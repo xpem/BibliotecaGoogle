@@ -3,34 +3,37 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BibliotecaXM.DetalhaLivros">
     <ContentPage.Content>
+
         <ScrollView>
-            <StackLayout Padding="10,5,10,5" VerticalOptions="Start" Orientation="Vertical" >
-                <StackLayout VerticalOptions="Start" Orientation="Vertical" BackgroundColor="FloralWhite" >
-                    <Image Source="{Binding Thumbnail}" Aspect="AspectFit"  WidthRequest="50" HeightRequest="120" />
-                    <Label   Text="{Binding VTitle}" HorizontalOptions="CenterAndExpand" TextColor="Black" FontSize="Medium" />
-                    <Label   Text="{Binding VSubtitle}" HorizontalOptions="CenterAndExpand" TextColor="Black" FontSize="Small" FontAttributes="Italic" />
+            <!--Padding="10,5,10,0"-->
+            <StackLayout Padding="0" VerticalOptions="Start" Orientation="Vertical" >
+                <!--<Frame Margin="0" BorderColor="Sienna" BackgroundColor="#5d4037">-->
+                <StackLayout VerticalOptions="Start" Orientation="Vertical" Margin="0" BackgroundColor="#5d4037">
+                    <Image   Source="{Binding Thumbnail}" Aspect="AspectFit" WidthRequest="100" HeightRequest="150" Margin="15" />
+                    <Label   Text="{Binding VTitle}" HorizontalOptions="CenterAndExpand" TextColor="White" FontSize="Medium" FontAttributes="Bold"/>
+                    <Label   Text="{Binding VSubtitle}" HorizontalOptions="CenterAndExpand" TextColor="White" FontSize="Small" FontAttributes="Italic" />
                 </StackLayout>
-                <!--<Grid HorizontalOptions="FillAndExpand">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition  Width ="*" />
-                    <ColumnDefinition  Width ="*" />
-                </Grid.ColumnDefinitions>-->
-                <Label  Text="Autores:" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Row="0" Grid.Column="0" FontAttributes="Italic" FontSize="10"/>
-                <Label  Text="{Binding VAuthors}" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Row="0" Grid.Column="1" FontSize="Micro" />
-                <Label  Text="{Binding VPageCount}" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" FontSize="Small"/>
-                <Label  Text="Editora:" Grid.Row="2"  HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Column="0" TextColor="Black" FontAttributes="Italic" FontSize="10"/>
-                <Label  Text="{Binding VPublisher}" HorizontalTextAlignment="Start"  VerticalTextAlignment="Start" Grid.Row="4" Grid.Column="1" FontSize="Micro"/>
-                <Label  Text="Categoria:" Grid.Row="3"  HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Column="0" TextColor="Black" FontAttributes="Italic" FontSize="10"/>
-                <Label  Text="{Binding VCategories}" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Row="3" Grid.Column="1" FontSize="Micro"/>
-                <!--</Grid>-->
-                <Label   Text="Descrição" HorizontalOptions="Start" TextColor="Black" FontSize="Small" FontAttributes="Italic"/>
-                <Label   Text="{Binding VDescription}" HorizontalOptions="StartAndExpand" TextColor="Black" FontSize="Small" />
+                <Frame Margin="0" BorderColor="Wheat" BackgroundColor="#8b6b61" HorizontalOptions="CenterAndExpand" >
+                    <StackLayout Orientation="Vertical" VerticalOptions="StartAndExpand">
+                        <!--Title="Minha Biblioteca:"-->
+                        <Picker x:Name="PkrBiblioteca" SelectedIndexChanged="PkrBiblioteca_SelectedIndexChanged" SelectedIndex="{ Binding VStatus }" HorizontalOptions="Start" WidthRequest="150"  FontSize="Small"/>
+                        <Label  x:Name="LblSdlrAvaliacao" Text="{Binding Source={x:Reference AvRSldr}, Path=Value, StringFormat='Avaliação pessoal: {0:F0} de 5'}" TextColor="White" HorizontalTextAlignment="Center" Margin="0, 20, 0, 0" />
+                        <Slider x:Name="AvRSldr" Minimum="0" Maximum="5" Value="{ Binding VAvaliacao }" ThumbColor="#efebeb" BackgroundColor="#bdb9b9" HorizontalOptions="FillAndExpand"/>
+                        <Button Text="Confirmar" VerticalOptions="Fill" HorizontalOptions="Center" BackgroundColor="#5b3f36" TextColor="White" x:Name="BtnBuscar" FontSize="Micro" Margin="0,10,0,0" BorderRadius="15" Clicked="BtnBuscar_Clicked" />
+                    </StackLayout>
+                </Frame>
+                <StackLayout  Orientation="Vertical" BackgroundColor="#F5F5F6" HorizontalOptions="CenterAndExpand" VerticalOptions="Fill">
+                    <Label  Text="Autores:" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Row="0" Grid.Column="0" FontAttributes="Italic" FontSize="10"/>
+                    <Label  Text="{Binding VAuthors}" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Row="0" Grid.Column="1" FontSize="Micro" />
+                    <Label  Text="{Binding VPageCount}" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" FontSize="Small"/>
+                    <Label  Text="Editora:" Grid.Row="2"  HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Column="0" TextColor="Black" FontAttributes="Italic" FontSize="10"/>
+                    <Label  Text="{Binding VPublisher}" HorizontalTextAlignment="Start"  VerticalTextAlignment="Start" Grid.Row="4" Grid.Column="1" FontSize="Micro"/>
+                    <Label  Text="Categoria:" Grid.Row="3"  HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Column="0" TextColor="Black" FontAttributes="Italic" FontSize="10"/>
+                    <Label  Text="{Binding VCategories}" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Row="3" Grid.Column="1" FontSize="Micro"/>
+                    <!--</Grid>-->
+                    <Label   Text="Descrição" HorizontalOptions="Start" TextColor="Black" FontSize="Small" FontAttributes="Italic"/>
+                    <Label   Text="{Binding VDescription}" HorizontalOptions="StartAndExpand" TextColor="Black" FontSize="Small" />
+                </StackLayout>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

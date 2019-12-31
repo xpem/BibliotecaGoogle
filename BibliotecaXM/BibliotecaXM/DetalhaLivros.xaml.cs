@@ -1,7 +1,8 @@
 ﻿using BL;
-using BL.Models;
+using ML;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,8 @@ namespace BibliotecaXM
     {
 
         WsServiceBook ws = new WsServiceBook();
+        private static string IdBook;
+        private static string Key;
 
         //itens que são carregados de forma assincrona
         #region variaveis do bind.
@@ -97,56 +100,132 @@ namespace BibliotecaXM
                 vCategories = value; OnPropertyChanged();
             }
         }
+        private string vStatus;
+        public string VStatus
+        {
+            get => vStatus;
+            set
+            {
+                vStatus = value; OnPropertyChanged();
+            }
+        }
+        private string vAvaliacao;
+        public string VAvaliacao
+        {
+            get => vAvaliacao;
+            set
+            {
+                vAvaliacao = value; OnPropertyChanged();
+            }
+        }
         #endregion
 
         public DetalhaLivros(string id)
         {
             Book book = new Book();
+            IdBook = id;
+            VStatus = VAvaliacao = "0";
+            Key = null;
 
             BindingContext = this;
 
+            //1
             Task.Run(async () =>
             {
+                this.Title = "Loading";
                 book = await ws.WsBook(id);
+
                 Thumbnail = book.Thumbnail;
                 VTitle = book.Title;
                 VAuthors = book.Authors;
                 VCategories = book.Categories;
-                VPageCount = (book.PageCount += "páginas");
+                VPageCount = (book.PageCount += " páginas");
                 VPublisher = book.Publisher;
                 VSubtitle = book.Subtitle;
                 VDescription = book.Description;
+                this.Title = "Done";
             }).Wait();
 
             InitializeComponent();
 
+            ObservableCollection<string> BBTStatus = new ObservableCollection<string> { "Nenhum", "Favoritos", "Vou ler", "Lendo", "Lido" };
+
+            PkrBiblioteca.ItemsSource = BBTStatus;
+
+            //2
+            Task.Run(async () =>
+            {
+                this.Title = "Loading";
+                BookStatus bookStatus = new BookStatus();
+
+                bookStatus = await BL.Services.FbServices.GetBookStatus(id);
+
+                if (bookStatus != null)
+                {
+                    Key = bookStatus.Key;
+                    VStatus = bookStatus.Status.ToString();
+                    VAvaliacao = bookStatus.Avaliacao.ToString();
+                    BtnBuscar.Text = "Alterar";
+                }
+                else
+                {
+                    VStatus = VAvaliacao = "0";
+                }
+                this.Title = "Done";
+
+            }).Wait();
+
+
+            //PkrBiblioteca.SelectedIndex = 0;
+
+            AvRSldr.IsVisible = LblSdlrAvaliacao.IsVisible = BtnBuscar.IsVisible = false;
+
         }
 
+        private void PkrBiblioteca_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int index = PkrBiblioteca.SelectedIndex;
 
+            if (PkrBiblioteca.SelectedIndex == 0)
+            {
+                BtnBuscar.IsVisible = false;
+            }
+            else
+            {
+                BtnBuscar.IsVisible = true;
 
+                if (PkrBiblioteca.SelectedIndex == 4)
+                {
+                    AvRSldr.IsVisible = LblSdlrAvaliacao.IsVisible = true;
+                }
+                else
+                {
+                    AvRSldr.IsVisible = LblSdlrAvaliacao.IsVisible = false;
+                }
+            }
+        }
 
-        //Book book = new Book();
-        //public DetalhaLivros(string id)
-        //{
+        private async void BtnBuscar_Clicked(object sender, EventArgs e)
+        {
+            this.Title = "Loading";
+            BtnBuscar.IsEnabled = false;
+            int avaliacao = 0;
 
+            if (PkrBiblioteca.SelectedIndex == 4)
+            {
+                avaliacao = Convert.ToInt32(AvRSldr.Value);
+            }
 
-        //    BindingContext = this;
-
-        //    Initialization = InitializeAsync(id);
-
-        //    InitializeComponent();
-
-        //}
-
-        //public Task Initialization { get; private set; }
-
-        //private async Task InitializeAsync(string id)
-        //{
-        //    book = await ws.WsBook(id);
-        //    Thumbnail = book.Thumbnail;
-        //    VTitle = book.Title;
-        //}
-
-
+            if (string.IsNullOrEmpty(Key))
+            {
+                BL.Services.FbServices.AddBookStatus(IdBook, PkrBiblioteca.SelectedIndex, avaliacao);
+            }
+            else
+            {
+                BL.Services.FbServices.UpdateBookStatus(Key, IdBook, PkrBiblioteca.SelectedIndex, avaliacao);
+            }
+            this.Title = "Done";
+            
+        }
     }
 }

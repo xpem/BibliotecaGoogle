@@ -1,4 +1,4 @@
-﻿using BL.Models;
+﻿using ML;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -87,10 +87,11 @@ namespace BibliotecaXM
             {
                 Book book = new Book();
                 book = (Book)e.SelectedItem;
-
                 DetalhaLivros detalhaLivros = new DetalhaLivros(book.Id);
                 Navigation.PushAsync(detalhaLivros);
+                LstLivros.SelectedItem = null;
             }
+
         }
     }
 }

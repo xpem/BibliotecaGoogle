@@ -4,25 +4,29 @@
              xmlns:local="clr-namespace:BibliotecaXM"
              x:Class="BibliotecaXM.MainPage"
              Title="Home"
-             Padding="0,10,0,0">
+             Padding="0,10,0,0" BackgroundColor="#5d4037">
     <ContentPage.Content>
-        <!--<ContentPage.Padding>
-            <OnPlatform x:TypeArguments="Thickness">
-                <On Platform="iOS, Android" Value="0,40,0,0" />
-            </OnPlatform>
-        </ContentPage.Padding>-->
-        <StackLayout Padding="10,5,10,5" VerticalOptions="Start" Orientation="Vertical" >
-            <Label Text="Buscar:"
+        <StackLayout Padding="10,5,10,5" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Orientation="Vertical"  >
+            <!--<Label Text="Buscar:"
                 VerticalOptions="Fill" 
-                HorizontalOptions="Start" TextColor="Black"/>
+                HorizontalOptions="Start" TextColor="White"/>-->
             <Entry VerticalOptions="Fill" 
-                HorizontalOptions="FillAndExpand" x:Name="EntBusca" MaxLength="100">
+                HorizontalOptions="FillAndExpand" x:Name="EntBusca"  BackgroundColor="White">
             </Entry>
-            <Button Text="buscar" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" BackgroundColor="DarkBlue" x:Name="BtnBuscar" TextColor="White" FontSize="Medium" Margin="10, 10, 10, 10" Clicked="BtnBuscar_Clicked" />
+            <Button Text="Buscar" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" BackgroundColor="#896a60" TextColor="White"  x:Name="BtnBuscar" FontSize="Medium" Margin="10, 10, 10, 10" Clicked="BtnBuscar_Clicked" />
+            <Frame Margin="10" BorderColor="Wheat" BackgroundColor="#5d4037" HorizontalOptions="FillAndExpand" >
+                <StackLayout Orientation="Vertical" >
+                    <Label Text="Emanuel Martins"
+                VerticalOptions="Fill" 
+                HorizontalOptions="Start" TextColor="White" FontSize="Medium" FontAttributes="Italic"/>
+                    <Button Text="Minha Estante" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" BackgroundColor="#896a60" TextColor="White"  x:Name="BtnEstante" FontSize="Medium" Margin="10, 10, 10, 10" BorderRadius="10" />
+                </StackLayout>
+            </Frame>
             <ActivityIndicator x:Name="ActivitySpinner" Color="Red" IsRunning="True" VerticalOptions="StartAndExpand" 
                 HorizontalOptions="CenterAndExpand"></ActivityIndicator>
         </StackLayout>
-    <!--</ContentPage>-->
+
+        <!--</ContentPage>-->
     <!--<ContentPage>
         <ContentPage.Padding>
             <OnPlatform x:TypeArguments="Thickness">

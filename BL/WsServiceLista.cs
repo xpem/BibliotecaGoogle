@@ -1,4 +1,4 @@
-﻿using BL.Models;
+﻿using ML;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
@@ -72,9 +72,8 @@ namespace BL
             Book livro = new Book();
             dynamic items = array.items;
             int itemscount = ((ICollection)array.items).Count;
-            StringBuilder strbdrarrays = new StringBuilder();
+            string strbdrarrays = "";
             IList<string> lstAuthors;
-            IList<string> lstCategories;
             string PublishedDate;
             dynamic volumeInfo;
             //
@@ -125,25 +124,33 @@ namespace BL
                 if (volumeInfo.ContainsKey("authors"))
                 {
                     lstAuthors = volumeInfo.authors.ToObject<IList<string>>();
-                    strbdrarrays = new StringBuilder();
+                    strbdrarrays = "";
                     foreach (string itnAuthors in lstAuthors)
                     {
-                        strbdrarrays.Append(itnAuthors);
+                        if(string.IsNullOrEmpty(strbdrarrays.ToString()))
+                        {
+                            strbdrarrays = itnAuthors;
+                        }
+                        else
+                        {
+                            strbdrarrays += $"; {itnAuthors}";
+                        }
+                        
                     }
-                    livro.Authors = strbdrarrays.ToString();
+                    livro.Authors = strbdrarrays;
                 }
 
-                if (volumeInfo.ContainsKey("categories"))
-                {
+                //if (volumeInfo.ContainsKey("categories"))
+                //{
 
-                    lstCategories = volumeInfo.categories.ToObject<IList<string>>();
-                    strbdrarrays = new StringBuilder();
-                    foreach (string itnCategories in lstCategories)
-                    {
-                        strbdrarrays.AppendLine(itnCategories);
-                    }
-                    livro.Categories = strbdrarrays.ToString();
-                }
+                //    lstCategories = volumeInfo.categories.ToObject<IList<string>>();
+                //    strbdrarrays = new StringBuilder();
+                //    foreach (string itnCategories in lstCategories)
+                //    {
+                //        strbdrarrays.AppendLine(itnCategories);
+                //    }
+                //    livro.Categories = strbdrarrays.ToString();
+                //}
                 Lista.Add(livro);
             }
 

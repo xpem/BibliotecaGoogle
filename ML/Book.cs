@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Models
+namespace ML
 {
     public class Book
     {
@@ -19,7 +19,7 @@ namespace BL.Models
         public string Authors { get; set; }
 
         public string Publisher { get; set; }
-       // public string PublishedDate { get; set; }
+        // public string PublishedDate { get; set; }
 
         public string PageCount { get; set; }
 

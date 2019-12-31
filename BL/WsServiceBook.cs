@@ -1,4 +1,4 @@
-﻿using BL.Models;
+﻿using ML;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -71,9 +71,9 @@ namespace BL
 
             if (volumeInfo.ContainsKey("imageLinks"))
             {
-                if (volumeInfo.imageLinks.ContainsKey("smallThumbnail"))
+                if (volumeInfo.imageLinks.ContainsKey("thumbnail"))
                 {
-                    livro.Thumbnail = volumeInfo.imageLinks.smallThumbnail;
+                    livro.Thumbnail = volumeInfo.imageLinks.thumbnail;
                 }
             }
             if (volumeInfo.ContainsKey("publisher"))
@@ -95,7 +95,15 @@ namespace BL
                 {
                     PublishedDate = volumeInfo.publishedDate;
                 }
-                livro.Publisher += "-" + PublishedDate;
+                if (!string.IsNullOrEmpty(livro.Publisher))
+                {
+                    livro.Publisher += " - " + PublishedDate;
+                }
+                else
+                {
+                    livro.Publisher = PublishedDate;
+                }
+              
             }
 
             if (volumeInfo.ContainsKey("authors"))

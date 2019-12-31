@@ -11,8 +11,17 @@ namespace BibliotecaXM
     [DesignTimeVisible(true)]
     public partial class MainPage : ContentPage
     {
+        bool cornerRadius;
 
-
+        public bool CornerRadius
+        {
+            get => cornerRadius;
+            set
+            {
+                cornerRadius = value;
+                OnPropertyChanged();
+            }
+        }        
 
         public MainPage()
         {
@@ -22,19 +31,28 @@ namespace BibliotecaXM
 
         private void BtnBuscar_Clicked(object sender, EventArgs e)
         {
-            ActivitySpinner.IsRunning = true;
-            BtnBuscar.IsEnabled = false;
-           Task.Run(() =>
+            BL.Services.FbServices fbServices = new BL.Services.FbServices();
+            
+            if (!string.IsNullOrEmpty(EntBusca.Text))
             {
-                string Busca = EntBusca.Text;
-                Device.BeginInvokeOnMainThread(() => {
-                    this.Navigation.PushAsync(new ListaLivros(Busca));
-                    ActivitySpinner.IsRunning = false;
-                    BtnBuscar.IsEnabled = true;
-                });
-            });
-   
-    
+                ActivitySpinner.IsRunning = true;
+                BtnBuscar.IsEnabled = false;
+                Task.Run(() =>
+                 {
+                     string Busca = EntBusca.Text;
+                     Device.BeginInvokeOnMainThread(() =>
+                     {
+                         this.Navigation.PushAsync(new ListaLivros(Busca));
+                         ActivitySpinner.IsRunning = false;
+                         BtnBuscar.IsEnabled = true;
+                     });
+                 });
+            }
+            else
+            {
+                DisplayAlert("Aviso", "Digite um texto para a busca", null, "Ok");
+            }
+
         }        
     }
 }
