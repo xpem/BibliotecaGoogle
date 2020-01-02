@@ -12,7 +12,7 @@ namespace AL
 {
     public class AcessoFb
     {
-       private static FirebaseClient firebase = new FirebaseClient("https://mylibrary-20954.firebaseio.com/");
+       public static FirebaseClient firebase = new FirebaseClient("https://mylibrary-20954.firebaseio.com/");
 
         public async static void AddUserBookStatus(int vIdUsuario,string vIdBook,int vStatus,int vAvaliacao )
         {

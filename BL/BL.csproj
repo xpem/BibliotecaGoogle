@@ -46,12 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services\FbServices.cs" />
+    <Compile Include="Services\FbBookshelf.cs" />
+    <Compile Include="Services\FbBook.cs" />
     <Compile Include="WsServiceBook.cs" />
     <Compile Include="WsServiceLista.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

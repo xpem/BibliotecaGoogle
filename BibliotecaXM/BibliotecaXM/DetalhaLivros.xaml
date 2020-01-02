@@ -6,26 +6,25 @@
 
         <ScrollView>
             <!--Padding="10,5,10,0"-->
-            <StackLayout Padding="0" VerticalOptions="Start" Orientation="Vertical" >
-                <!--<Frame Margin="0" BorderColor="Sienna" BackgroundColor="#5d4037">-->
-                <StackLayout VerticalOptions="Start" Orientation="Vertical" Margin="0" BackgroundColor="#5d4037">
+            <StackLayout Padding="0" VerticalOptions="FillAndExpand" Orientation="Vertical" >
+                <StackLayout  Orientation="Vertical" Margin="0" BackgroundColor="#5d4037">
                     <Image   Source="{Binding Thumbnail}" Aspect="AspectFit" WidthRequest="100" HeightRequest="150" Margin="15" />
-                    <Label   Text="{Binding VTitle}" HorizontalOptions="CenterAndExpand" TextColor="White" FontSize="Medium" FontAttributes="Bold"/>
-                    <Label   Text="{Binding VSubtitle}" HorizontalOptions="CenterAndExpand" TextColor="White" FontSize="Small" FontAttributes="Italic" />
+                    <Label   Text="{Binding VTitle}" HorizontalOptions="CenterAndExpand" TextColor="White" FontSize="Medium" FontAttributes="Bold" Padding="0,0,0,5"/>
+                    <Label x:Name="LblSubtitle"  Text="{Binding VSubtitle}" HorizontalOptions="CenterAndExpand" TextColor="White" FontSize="Small" Padding="0,0,0,5" FontAttributes="Italic" />
                 </StackLayout>
-                <Frame Margin="0" BorderColor="Wheat" BackgroundColor="#8b6b61" HorizontalOptions="CenterAndExpand" >
-                    <StackLayout Orientation="Vertical" VerticalOptions="StartAndExpand">
+                <Frame Margin="10,0,10,0" BorderColor="#5d4037" BackgroundColor="#d7ccc8" HorizontalOptions="FillAndExpand"  VerticalOptions="Start">
+                    <StackLayout Orientation="Vertical">
                         <!--Title="Minha Biblioteca:"-->
-                        <Picker x:Name="PkrBiblioteca" SelectedIndexChanged="PkrBiblioteca_SelectedIndexChanged" SelectedIndex="{ Binding VStatus }" HorizontalOptions="Start" WidthRequest="150"  FontSize="Small"/>
-                        <Label  x:Name="LblSdlrAvaliacao" Text="{Binding Source={x:Reference AvRSldr}, Path=Value, StringFormat='Avaliação pessoal: {0:F0} de 5'}" TextColor="White" HorizontalTextAlignment="Center" Margin="0, 20, 0, 0" />
-                        <Slider x:Name="AvRSldr" Minimum="0" Maximum="5" Value="{ Binding VAvaliacao }" ThumbColor="#efebeb" BackgroundColor="#bdb9b9" HorizontalOptions="FillAndExpand"/>
-                        <Button Text="Confirmar" VerticalOptions="Fill" HorizontalOptions="Center" BackgroundColor="#5b3f36" TextColor="White" x:Name="BtnBuscar" FontSize="Micro" Margin="0,10,0,0" BorderRadius="15" Clicked="BtnBuscar_Clicked" />
+                        <Picker x:Name="PkrBiblioteca" SelectedIndexChanged="PkrBiblioteca_SelectedIndexChanged" SelectedIndex="{ Binding VStatus }" HorizontalOptions="Center" VerticalOptions="Start" WidthRequest="150" BackgroundColor="#fff" TextColor="Black" FontSize="15"/>
+                        <Label  x:Name="LblSdlrAvaliacao" Text="{Binding Source={x:Reference AvRSldr}, Path=Value, StringFormat='Avaliação pessoal: {0:F0} de 5'}" TextColor="#5D4037" HorizontalTextAlignment="Center" Margin="0, 20, 0, 0" />
+                        <Slider x:Name="AvRSldr" Minimum="0" Maximum="5" Value="{ Binding VAvaliacao }" ThumbColor="#efebeb" BackgroundColor="#5D4037" HorizontalOptions="FillAndExpand" />
+                        <Button Text="Confirmar" VerticalOptions="Fill" HorizontalOptions="Center" BackgroundColor="#5b3f36" TextColor="White" x:Name="BtnBuscar" FontSize="Micro" Margin="0,10,0,0" HeightRequest="40" CornerRadius="15" Clicked="BtnBuscar_Clicked" />
                     </StackLayout>
                 </Frame>
-                <StackLayout  Orientation="Vertical" BackgroundColor="#F5F5F6" HorizontalOptions="CenterAndExpand" VerticalOptions="Fill">
-                    <Label  Text="Autores:" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Row="0" Grid.Column="0" FontAttributes="Italic" FontSize="10"/>
+                <StackLayout  Orientation="Vertical" BackgroundColor="#F5F5F6" Padding="10" HorizontalOptions="FillAndExpand" VerticalOptions="Fill">
+                    <Label  Text="Autores:" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Row="0" Grid.Column="0" FontAttributes="Italic" TextColor="Black"  FontSize="10"/>
                     <Label  Text="{Binding VAuthors}" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Row="0" Grid.Column="1" FontSize="Micro" />
-                    <Label  Text="{Binding VPageCount}" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" FontSize="Small"/>
+                    <Label  Text="{Binding VPageCount}" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" FontSize="Small" FontAttributes="Bold"/>
                     <Label  Text="Editora:" Grid.Row="2"  HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Column="0" TextColor="Black" FontAttributes="Italic" FontSize="10"/>
                     <Label  Text="{Binding VPublisher}" HorizontalTextAlignment="Start"  VerticalTextAlignment="Start" Grid.Row="4" Grid.Column="1" FontSize="Micro"/>
                     <Label  Text="Categoria:" Grid.Row="3"  HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Column="0" TextColor="Black" FontAttributes="Italic" FontSize="10"/>

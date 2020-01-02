@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace BL.Services
 {
-    public class FbServices
+    public class FbBook
     {
-        public async static void AddBookStatus(string IdBook, int Status, int Avaliacao)
+        public async static Task AddBookStatus(string IdBook, int Status, int Avaliacao)
         {
             //fixei o usuario como teste
-            AL.AcessoFb.AddUserBookStatus(1, IdBook, Status, Avaliacao);
+           AL.AcessoFb.AddUserBookStatus(1, IdBook, Status, Avaliacao);
         }
 
-        public async static void UpdateBookStatus(string Key, string IdBook, int Status, int Avaliacao)
+        public async static Task UpdateBookStatus(string Key, string IdBook, int Status, int Avaliacao)
         {
             AL.AcessoFb.UpdateBookStatus(Key, 1,IdBook, Status, Avaliacao);
         }

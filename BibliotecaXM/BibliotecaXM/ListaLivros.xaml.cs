@@ -28,9 +28,7 @@ namespace BibliotecaXM
             }
         }
 
-
         BL.WsServiceLista ws = new BL.WsServiceLista();
-        int TotalItems { get; set; }
 
         public ListaLivros(string Busca)
         {

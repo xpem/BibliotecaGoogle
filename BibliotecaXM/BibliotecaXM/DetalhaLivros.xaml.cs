@@ -122,59 +122,28 @@ namespace BibliotecaXM
 
         public DetalhaLivros(string id)
         {
-            Book book = new Book();
             IdBook = id;
             VStatus = VAvaliacao = "0";
             Key = null;
 
             BindingContext = this;
 
-            //1
-            Task.Run(async () =>
-            {
-                this.Title = "Loading";
-                book = await ws.WsBook(id);
-
-                Thumbnail = book.Thumbnail;
-                VTitle = book.Title;
-                VAuthors = book.Authors;
-                VCategories = book.Categories;
-                VPageCount = (book.PageCount += " páginas");
-                VPublisher = book.Publisher;
-                VSubtitle = book.Subtitle;
-                VDescription = book.Description;
-                this.Title = "Done";
-            }).Wait();
 
             InitializeComponent();
 
-            ObservableCollection<string> BBTStatus = new ObservableCollection<string> { "Nenhum", "Favoritos", "Vou ler", "Lendo", "Lido" };
+            ObservableCollection<string> BBTStatus = new ObservableCollection<string> { "Nenhum", "Vou ler", "Lendo", "Lido" };
 
             PkrBiblioteca.ItemsSource = BBTStatus;
 
+            this.Title = "Loading";
+
+            //1
+            CarregaBook(id);
+
             //2
-            Task.Run(async () =>
-            {
-                this.Title = "Loading";
-                BookStatus bookStatus = new BookStatus();
+            CarregaBookStatus(id);
 
-                bookStatus = await BL.Services.FbServices.GetBookStatus(id);
-
-                if (bookStatus != null)
-                {
-                    Key = bookStatus.Key;
-                    VStatus = bookStatus.Status.ToString();
-                    VAvaliacao = bookStatus.Avaliacao.ToString();
-                    BtnBuscar.Text = "Alterar";
-                }
-                else
-                {
-                    VStatus = VAvaliacao = "0";
-                }
-                this.Title = "Done";
-
-            }).Wait();
-
+            this.Title = "Done";
 
             //PkrBiblioteca.SelectedIndex = 0;
 
@@ -182,19 +151,60 @@ namespace BibliotecaXM
 
         }
 
+        private async void CarregaBook(string id)
+        {
+            Book book = await ws.WsBook(id);
+
+            Thumbnail = book.Thumbnail;
+            VTitle = book.Title;
+            VAuthors = book.Authors;
+            VCategories = book.Categories;
+            VPageCount = (book.PageCount += " páginas");
+            VPublisher = book.Publisher;
+
+            if (string.IsNullOrEmpty(book.Subtitle))
+            {
+                LblSubtitle.IsVisible = false;
+            }
+            else
+                VSubtitle = book.Subtitle;
+
+            VDescription = book.Description;
+        }
+
+        private async void CarregaBookStatus(string id)
+        {
+            BookStatus bookStatus = await BL.Services.FbBook.GetBookStatus(id);
+
+            if (bookStatus != null)
+            {
+                Key = bookStatus.Key;
+                VStatus = bookStatus.Status.ToString();
+                VAvaliacao = bookStatus.Avaliacao.ToString();
+                BtnBuscar.Text = "Alterar";
+            }
+            else
+            {
+                VStatus = VAvaliacao = "0";
+                BtnBuscar.IsVisible = false;
+            }
+        }
+
+
+
         private void PkrBiblioteca_SelectedIndexChanged(object sender, EventArgs e)
         {
             int index = PkrBiblioteca.SelectedIndex;
 
             if (PkrBiblioteca.SelectedIndex == 0)
             {
-                BtnBuscar.IsVisible = false;
+                AvRSldr.IsVisible = LblSdlrAvaliacao.IsVisible = false;
             }
             else
             {
-                BtnBuscar.IsVisible = true;
+                BtnBuscar.IsVisible = BtnBuscar.IsEnabled = true;
 
-                if (PkrBiblioteca.SelectedIndex == 4)
+                if (PkrBiblioteca.SelectedIndex == 3)
                 {
                     AvRSldr.IsVisible = LblSdlrAvaliacao.IsVisible = true;
                 }
@@ -211,21 +221,23 @@ namespace BibliotecaXM
             BtnBuscar.IsEnabled = false;
             int avaliacao = 0;
 
-            if (PkrBiblioteca.SelectedIndex == 4)
+            if (PkrBiblioteca.SelectedIndex == 3)
             {
                 avaliacao = Convert.ToInt32(AvRSldr.Value);
             }
 
             if (string.IsNullOrEmpty(Key))
             {
-                BL.Services.FbServices.AddBookStatus(IdBook, PkrBiblioteca.SelectedIndex, avaliacao);
+                await BL.Services.FbBook.AddBookStatus(IdBook, PkrBiblioteca.SelectedIndex, avaliacao);
             }
             else
             {
-                BL.Services.FbServices.UpdateBookStatus(Key, IdBook, PkrBiblioteca.SelectedIndex, avaliacao);
+                await BL.Services.FbBook.UpdateBookStatus(Key, IdBook, PkrBiblioteca.SelectedIndex, avaliacao);
             }
+
+            AvRSldr.IsVisible = BtnBuscar.IsVisible = false;
             this.Title = "Done";
-            
+
         }
     }
 }

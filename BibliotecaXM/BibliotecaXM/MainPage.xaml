@@ -7,25 +7,26 @@
              Padding="0,10,0,0" BackgroundColor="#5d4037">
     <ContentPage.Content>
         <StackLayout Padding="10,5,10,5" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Orientation="Vertical"  >
-            <!--<Label Text="Buscar:"
-                VerticalOptions="Fill" 
-                HorizontalOptions="Start" TextColor="White"/>-->
-            <Entry VerticalOptions="Fill" 
-                HorizontalOptions="FillAndExpand" x:Name="EntBusca"  BackgroundColor="White">
-            </Entry>
-            <Button Text="Buscar" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" BackgroundColor="#896a60" TextColor="White"  x:Name="BtnBuscar" FontSize="Medium" Margin="10, 10, 10, 10" Clicked="BtnBuscar_Clicked" />
-            <Frame Margin="10" BorderColor="Wheat" BackgroundColor="#5d4037" HorizontalOptions="FillAndExpand" >
+            <Frame Margin="10" BorderColor="Wheat" BackgroundColor="#E1E2E1" HorizontalOptions="FillAndExpand" HasShadow="True" CornerRadius="10" >
                 <StackLayout Orientation="Vertical" >
-                    <Label Text="Emanuel Martins"
-                VerticalOptions="Fill" 
-                HorizontalOptions="Start" TextColor="White" FontSize="Medium" FontAttributes="Italic"/>
-                    <Button Text="Minha Estante" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" BackgroundColor="#896a60" TextColor="White"  x:Name="BtnEstante" FontSize="Medium" Margin="10, 10, 10, 10" BorderRadius="10" />
+                    <Entry VerticalOptions="Fill" 
+                HorizontalOptions="FillAndExpand" x:Name="EntBusca"  BackgroundColor="White">
+                    </Entry>
+                    <Button Text="Buscar" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" 
+                            BackgroundColor="#26a69a"  TextColor="Black"  x:Name="BtnBuscar" FontAttributes="Bold" FontSize="Medium" Margin="10, 10, 10, 10" Clicked="BtnBuscar_Clicked" />
                 </StackLayout>
             </Frame>
-            <ActivityIndicator x:Name="ActivitySpinner" Color="Red" IsRunning="True" VerticalOptions="StartAndExpand" 
-                HorizontalOptions="CenterAndExpand"></ActivityIndicator>
+            <Frame Margin="10" BorderColor="Wheat" BackgroundColor="#E1E2E1" HorizontalOptions="FillAndExpand" HasShadow="True" CornerRadius="10" >
+                <StackLayout Orientation="Vertical" >
+                    <Label Text="Minha Estante"
+                VerticalOptions="Fill" 
+                HorizontalOptions="Center" TextColor="Black" FontSize="Large" FontAttributes="Bold"/>
+                    <Button Text="{Binding VVouLer,StringFormat='Vou Ler ({0})'}" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" BackgroundColor="#439889" TextColor="White"  x:Name="BtnVouLer" FontSize="Medium" Margin="10, 10, 10, 10" CornerRadius="10" />
+                    <Button Text="{Binding VLendo,StringFormat='Lido ({0})'}" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" BackgroundColor="#00695c" TextColor="White"  x:Name="BtnLendo" FontSize="Medium" Margin="10, 10, 10, 10" CornerRadius="10" />
+                    <Button Text="{Binding VLido,StringFormat='Lendo ({0})'}" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" BackgroundColor="#003d33" TextColor="White"  x:Name="BtnLidos" FontSize="Medium" Margin="10, 10, 10, 10" CornerRadius="10" />
+                </StackLayout>
+            </Frame>
         </StackLayout>
-
         <!--</ContentPage>-->
     <!--<ContentPage>
         <ContentPage.Padding>
