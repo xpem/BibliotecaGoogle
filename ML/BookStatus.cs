@@ -8,6 +8,9 @@ namespace ML
 {
     public class BookStatus
     {
+
+        public int Id { get; set; }
+
         public string Key { get; set; }
         public string IdBook { get; set; }
 

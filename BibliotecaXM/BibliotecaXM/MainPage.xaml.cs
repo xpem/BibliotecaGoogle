@@ -20,6 +20,7 @@ namespace BibliotecaXM
             {
                 cornerRadius = value;
                 OnPropertyChanged();
+
             }
         }
 
@@ -38,7 +39,6 @@ namespace BibliotecaXM
 
             InitializeComponent();
 
-
         }
 
         protected override void OnAppearing()
@@ -47,6 +47,21 @@ namespace BibliotecaXM
 
             CarregaBookshelfTotais();
 
+        }
+
+        private void BtnVouLer_Clicked(object sender, EventArgs e)
+        {
+            this.Navigation.PushAsync(new ListaBookshelf(1));
+        }
+        
+        private void BtnLidos_Clicked(object sender, EventArgs e)
+        {
+            this.Navigation.PushAsync(new ListaBookshelf(3));
+        }
+
+        private void BtnReading_Clicked(object sender, EventArgs e)
+        {
+            this.Navigation.PushAsync(new ListaBookshelf(2));
         }
 
         public async void CarregaBookshelfTotais()

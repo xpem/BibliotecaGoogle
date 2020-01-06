@@ -13,31 +13,24 @@
                 HorizontalOptions="FillAndExpand" x:Name="EntBusca"  BackgroundColor="White">
                     </Entry>
                     <Button Text="Buscar" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" 
-                            BackgroundColor="#26a69a"  TextColor="Black"  x:Name="BtnBuscar" FontAttributes="Bold" FontSize="Medium" Margin="10, 10, 10, 10" Clicked="BtnBuscar_Clicked" />
+                            BackgroundColor="#5b3f36"  TextColor="White"  x:Name="BtnBuscar" FontAttributes="Bold" FontSize="Medium" Margin="10, 10, 10, 10" Clicked="BtnBuscar_Clicked" />
                 </StackLayout>
             </Frame>
-            <Frame Margin="10" BorderColor="Wheat" BackgroundColor="#E1E2E1" HorizontalOptions="FillAndExpand" HasShadow="True" CornerRadius="10" >
-                <StackLayout Orientation="Vertical" >
-                    <Label Text="Minha Estante"
+            <ScrollView>
+                <Frame Margin="10" BorderColor="Wheat" BackgroundColor="#E1E2E1" HorizontalOptions="FillAndExpand" HasShadow="True" CornerRadius="10" >
+                    <StackLayout Orientation="Vertical" >
+                        <Label Text="Minha Estante"
                 VerticalOptions="Fill" 
                 HorizontalOptions="Center" TextColor="Black" FontSize="Large" FontAttributes="Bold"/>
-                    <Button Text="{Binding VVouLer,StringFormat='Vou Ler ({0})'}" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" BackgroundColor="#439889" TextColor="White"  x:Name="BtnVouLer" FontSize="Medium" Margin="10, 10, 10, 10" CornerRadius="10" />
-                    <Button Text="{Binding VLendo,StringFormat='Lido ({0})'}" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" BackgroundColor="#00695c" TextColor="White"  x:Name="BtnLendo" FontSize="Medium" Margin="10, 10, 10, 10" CornerRadius="10" />
-                    <Button Text="{Binding VLido,StringFormat='Lendo ({0})'}" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" BackgroundColor="#003d33" TextColor="White"  x:Name="BtnLidos" FontSize="Medium" Margin="10, 10, 10, 10" CornerRadius="10" />
-                </StackLayout>
-            </Frame>
+                        <Button Text="{Binding VVouLer,StringFormat='Vou Ler ({0})'}" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" BackgroundColor="#439889" TextColor="White" 
+                            x:Name="BtnVouLer" FontSize="Medium" Margin="10, 10, 10, 10" CornerRadius="10" Clicked="BtnVouLer_Clicked"/>
+                        <Button Text="{Binding VLendo,StringFormat='Lendo ({0})'}" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" BackgroundColor="#00695c" TextColor="White"
+                            x:Name="BtnReading" FontSize="Medium" Margin="10, 10, 10, 10" Clicked="BtnReading_Clicked" CornerRadius="10" />
+                        <Button Text="{Binding VLido,StringFormat='Lido ({0})'}" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" BackgroundColor="#003d33" TextColor="White"
+                            x:Name="BtnLidos" FontSize="Medium" Margin="10, 10, 10, 10" CornerRadius="10"  Clicked="BtnLidos_Clicked"/>
+                    </StackLayout>
+                </Frame>
+            </ScrollView>
         </StackLayout>
-        <!--</ContentPage>-->
-    <!--<ContentPage>
-        <ContentPage.Padding>
-            <OnPlatform x:TypeArguments="Thickness">
-                <On Platform="iOS, Android" Value="0,40,0,0" />
-            </OnPlatform>
-        </ContentPage.Padding>
-        <StackLayout>
-            <Label Text="Red" FontSize="Medium" HorizontalOptions="Center" />
-            <BoxView Color="Red" WidthRequest="200" HeightRequest="200" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage>-->
     </ContentPage.Content>
 </ContentPage>

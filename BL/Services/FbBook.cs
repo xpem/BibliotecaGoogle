@@ -9,15 +9,15 @@ namespace BL.Services
 {
     public class FbBook
     {
-        public async static Task AddBookStatus(string IdBook, int Status, int Avaliacao)
+        public async static void AddBookStatus(string IdBook, int Status, int Avaliacao)
         {
             //fixei o usuario como teste
-           AL.AcessoFb.AddUserBookStatus(1, IdBook, Status, Avaliacao);
+            await Task.Run(() => AL.AcessoFb.AddUserBookStatus(1, IdBook, Status, Avaliacao));
         }
 
-        public async static Task UpdateBookStatus(string Key, string IdBook, int Status, int Avaliacao)
+        public async static void UpdateBookStatus(string Key, string IdBook, int Status, int Avaliacao)
         {
-            AL.AcessoFb.UpdateBookStatus(Key, 1,IdBook, Status, Avaliacao);
+         await Task.Run(() => AL.AcessoFb.UpdateBookStatus(Key, 1, IdBook, Status, Avaliacao));
         }
 
         public async static Task<BookStatus> GetBookStatus(string IdBook)

@@ -70,88 +70,91 @@ namespace BL
 
             //variaveis utilizadas na criação da lista
             Book livro = new Book();
+            if(array.totalItems > 0)
+            { 
             dynamic items = array.items;
             int itemscount = ((ICollection)array.items).Count;
             string strbdrarrays = "";
             IList<string> lstAuthors;
             string PublishedDate;
             dynamic volumeInfo;
-            //
+                //
 
-            for (int i = 0; i < itemscount; i++)
-            {
-                livro = new Book();
-
-                livro.Id = items[i].id;
-                volumeInfo = items[i].volumeInfo;
-
-                livro.Title = volumeInfo.title;
-                
-                //if (volumeInfo.ContainsKey("subtitle"))
-                //{
-                //    livro.Subtitle = volumeInfo.subtitle;
-                //}
-                if (volumeInfo.ContainsKey("pageCount"))
-                {               
-                    livro.PageCount = volumeInfo.pageCount;
-                }
-                if (volumeInfo.ContainsKey("imageLinks"))
+                for (int i = 0; i < itemscount; i++)
                 {
-                    if (volumeInfo.imageLinks.ContainsKey("smallThumbnail"))
+                    livro = new Book();
+
+                    livro.Id = items[i].id;
+                    volumeInfo = items[i].volumeInfo;
+
+                    livro.Title = volumeInfo.title;
+
+                    //if (volumeInfo.ContainsKey("subtitle"))
+                    //{
+                    //    livro.Subtitle = volumeInfo.subtitle;
+                    //}
+                    if (volumeInfo.ContainsKey("pageCount"))
                     {
-                        livro.Thumbnail = volumeInfo.imageLinks.smallThumbnail;
+                        livro.PageCount = volumeInfo.pageCount;
                     }
-                }
-
-                if (volumeInfo.ContainsKey("publisher"))
-                {
-                    livro.Publisher = volumeInfo.publisher;
-                }
-                if (volumeInfo.ContainsKey("publishedDate"))
-                {
-                    try
+                    if (volumeInfo.ContainsKey("imageLinks"))
                     {
-                        //tenta converter a data, que esteja no formato que é normalmente o padrão.
-                        PublishedDate = string.Format("{0:dd/MM/yyyy}", (DateTime.ParseExact(((volumeInfo.publishedDate).ToString()), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)));
-                    }
-                    catch
-                    {
-                        PublishedDate = volumeInfo.publishedDate;
-                    }
-                    livro.Publisher += "-" + PublishedDate;
-                }
-
-                if (volumeInfo.ContainsKey("authors"))
-                {
-                    lstAuthors = volumeInfo.authors.ToObject<IList<string>>();
-                    strbdrarrays = "";
-                    foreach (string itnAuthors in lstAuthors)
-                    {
-                        if(string.IsNullOrEmpty(strbdrarrays.ToString()))
+                        if (volumeInfo.imageLinks.ContainsKey("smallThumbnail"))
                         {
-                            strbdrarrays = itnAuthors;
+                            livro.Thumbnail = volumeInfo.imageLinks.smallThumbnail;
                         }
-                        else
-                        {
-                            strbdrarrays += $"; {itnAuthors}";
-                        }
-                        
                     }
-                    livro.Authors = strbdrarrays;
+
+                    if (volumeInfo.ContainsKey("publisher"))
+                    {
+                        livro.Publisher = volumeInfo.publisher;
+                    }
+                    if (volumeInfo.ContainsKey("publishedDate"))
+                    {
+                        try
+                        {
+                            //tenta converter a data, que esteja no formato que é normalmente o padrão.
+                            PublishedDate = string.Format("{0:dd/MM/yyyy}", (DateTime.ParseExact(((volumeInfo.publishedDate).ToString()), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)));
+                        }
+                        catch
+                        {
+                            PublishedDate = volumeInfo.publishedDate;
+                        }
+                        livro.Publisher += "-" + PublishedDate;
+                    }
+
+                    if (volumeInfo.ContainsKey("authors"))
+                    {
+                        lstAuthors = volumeInfo.authors.ToObject<IList<string>>();
+                        strbdrarrays = "";
+                        foreach (string itnAuthors in lstAuthors)
+                        {
+                            if (string.IsNullOrEmpty(strbdrarrays.ToString()))
+                            {
+                                strbdrarrays = itnAuthors;
+                            }
+                            else
+                            {
+                                strbdrarrays += $"; {itnAuthors}";
+                            }
+
+                        }
+                        livro.Authors = strbdrarrays;
+                    }
+
+                    //if (volumeInfo.ContainsKey("categories"))
+                    //{
+
+                    //    lstCategories = volumeInfo.categories.ToObject<IList<string>>();
+                    //    strbdrarrays = new StringBuilder();
+                    //    foreach (string itnCategories in lstCategories)
+                    //    {
+                    //        strbdrarrays.AppendLine(itnCategories);
+                    //    }
+                    //    livro.Categories = strbdrarrays.ToString();
+                    //}
+                    Lista.Add(livro);
                 }
-
-                //if (volumeInfo.ContainsKey("categories"))
-                //{
-
-                //    lstCategories = volumeInfo.categories.ToObject<IList<string>>();
-                //    strbdrarrays = new StringBuilder();
-                //    foreach (string itnCategories in lstCategories)
-                //    {
-                //        strbdrarrays.AppendLine(itnCategories);
-                //    }
-                //    livro.Categories = strbdrarrays.ToString();
-                //}
-                Lista.Add(livro);
             }
 
             // var teste4 = teste["volumeInfo"]["title"];

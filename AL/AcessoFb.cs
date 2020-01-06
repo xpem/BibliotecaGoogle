@@ -45,6 +45,20 @@ namespace AL
               }).ToList();
         }
 
+        public async static Task<List<BookStatus>> GetUserBookStatusByStatus(int vStatus,int vIdusuario)
+        {
+            return (await firebase
+              .Child("BookStatus")
+              .OnceAsync<BookStatus>()).Where(a => a.Object.IdUsuario == vIdusuario && a.Object.Status == vStatus).Select(item => new BookStatus
+              {
+                  Key = item.Key,
+                  IdBook = item.Object.IdBook,
+                  IdUsuario = item.Object.IdUsuario,
+                  Status = item.Object.Status,
+                  Avaliacao = item.Object.Avaliacao
+              }).ToList();
+        }
+
         public async static void UpdateBookStatus(string vKey, int vIdUsuario, string vIdBook, int vStatus, int vAvaliacao)
         {
             var toUpdateBookStatus = (await firebase

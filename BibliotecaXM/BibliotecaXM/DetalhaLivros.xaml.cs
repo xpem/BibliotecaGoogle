@@ -100,6 +100,8 @@ namespace BibliotecaXM
                 vCategories = value; OnPropertyChanged();
             }
         }
+
+
         private string vStatus;
         public string VStatus
         {
@@ -109,6 +111,8 @@ namespace BibliotecaXM
                 vStatus = value; OnPropertyChanged();
             }
         }
+
+
         private string vAvaliacao;
         public string VAvaliacao
         {
@@ -119,6 +123,9 @@ namespace BibliotecaXM
             }
         }
         #endregion
+
+        private string VStatusOri { get; set; }
+        private string VAvaliacaoOri { get; set; }
 
         public DetalhaLivros(string id)
         {
@@ -179,8 +186,8 @@ namespace BibliotecaXM
             if (bookStatus != null)
             {
                 Key = bookStatus.Key;
-                VStatus = bookStatus.Status.ToString();
-                VAvaliacao = bookStatus.Avaliacao.ToString();
+                VStatusOri = VStatus = bookStatus.Status.ToString();
+                VAvaliacaoOri = VAvaliacao = bookStatus.Avaliacao.ToString();
                 BtnBuscar.Text = "Alterar";
             }
             else
@@ -215,29 +222,39 @@ namespace BibliotecaXM
             }
         }
 
-        private async void BtnBuscar_Clicked(object sender, EventArgs e)
+        private void BtnBuscar_Clicked(object sender, EventArgs e)
         {
             this.Title = "Loading";
             BtnBuscar.IsEnabled = false;
             int avaliacao = 0;
-
-            if (PkrBiblioteca.SelectedIndex == 3)
+            bool alterou = false;
+            if (VAvaliacaoOri != VAvaliacao)
             {
-                avaliacao = Convert.ToInt32(AvRSldr.Value);
+                alterou = true;
             }
+            else if (VStatusOri != VStatus)
+                alterou = true;
 
-            if (string.IsNullOrEmpty(Key))
+            if (alterou)
             {
-                await BL.Services.FbBook.AddBookStatus(IdBook, PkrBiblioteca.SelectedIndex, avaliacao);
-            }
-            else
-            {
-                await BL.Services.FbBook.UpdateBookStatus(Key, IdBook, PkrBiblioteca.SelectedIndex, avaliacao);
-            }
+                if (PkrBiblioteca.SelectedIndex == 3)
+                {
+                    avaliacao = Convert.ToInt32(AvRSldr.Value);
+                }
 
-            AvRSldr.IsVisible = BtnBuscar.IsVisible = false;
-            this.Title = "Done";
+                if (string.IsNullOrEmpty(Key))
+                {
+                    BL.Services.FbBook.AddBookStatus(IdBook, PkrBiblioteca.SelectedIndex, avaliacao);
+                }
+                else
+                {
+                    BL.Services.FbBook.UpdateBookStatus(Key, IdBook, PkrBiblioteca.SelectedIndex, avaliacao);
+                }
 
-        }
+                AvRSldr.IsVisible = BtnBuscar.IsVisible = false;
+                this.Title = "Done";
+            }else
+                DisplayAlert("Aviso", "Sem alterações", null, "Ok");
+}
     }
 }

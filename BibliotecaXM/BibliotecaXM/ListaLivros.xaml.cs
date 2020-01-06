@@ -49,18 +49,31 @@ namespace BibliotecaXM
             isLoading = true;
             this.Title = "Loading";
 
-            foreach (Book book in await ws.WsBusca(Busca, 0, "", indice))
+            List<Book> lista = new List<Book>();
+            lista = await ws.WsBusca(Busca, 0, "", indice);
+
+            if (lista.Count == 0)
             {
-                if (!string.IsNullOrEmpty(book.PageCount))
-                {
-                    book.PageCount += " páginas";
-                }
-
-                Itenslista.Add(book);
+                this.Title = "Done";
+                isLoading = false;
+                await DisplayAlert("Aviso", "Sem retorno para a busca", null, "Ok");
             }
+            else
+            {
 
-            this.Title = "Done";
-            isLoading = false;
+                foreach (Book book in lista)
+                {
+                    if (!string.IsNullOrEmpty(book.PageCount))
+                    {
+                        book.PageCount += " páginas";
+                    }
+
+                    Itenslista.Add(book);
+                }
+                this.Title = "Done";
+                isLoading = false;
+            }
+            
         }
 
         private void CarregaFuncaoSelecao(string Busca, int indice)

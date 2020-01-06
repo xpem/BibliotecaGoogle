@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="BibliotecaXM.ListaBookshelf">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout BackgroundColor="#fff">
+                <ListView x:Name="LstLivros"  HasUnevenRows="True" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ItemSelected="LstLivros_ItemSelected"  >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Frame Margin="5" BorderColor="Sienna">
+                                    <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" Spacing="5">
+                                        <Grid HorizontalOptions="FillAndExpand" HeightRequest="150">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="2*"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition  Width ="3*" />
+                                                <ColumnDefinition  Width ="6*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image Source="{Binding Thumbnail}"
+                                       Grid.RowSpan="5"  Aspect="AspectFit"  WidthRequest="25"
+                                       HeightRequest="60"  />
+                                            <Label  Text="{Binding Title}" Grid.Row="0" Grid.Column="1" VerticalTextAlignment="Start" MaxLines="2" LineBreakMode="TailTruncation"  FontSize="Small" FontAttributes="Bold" TextColor="Black" VerticalOptions="StartAndExpand"  />
+                                            <Label  Text="{Binding Authors}" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" Grid.Row="1" Grid.Column="1" FontSize="Micro" LineBreakMode="TailTruncation" FontAttributes="Italic"/>
+                                            <Label  Text="{Binding Status}" TextColor="{Binding StatusColor}" HorizontalTextAlignment="Start" HorizontalOptions="Fill" Grid.Row="2" Grid.Column="1" FontSize="Small" FontAttributes="Bold"/>
+                                            <Label  Text="{Binding Avaliacao}" HorizontalTextAlignment="Start"  VerticalTextAlignment="Start" Grid.Row="3" Grid.Column="1" FontSize="Small" LineBreakMode="TailTruncation"  FontAttributes="Bold"/>
+                                        </Grid>
+                                    </StackLayout>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.Footer>
+                        <Grid Padding="6" IsVisible="{Binding IsLoading}">
+                            <Grid.Triggers>
+                                <Trigger TargetType="Grid" Property="IsVisible" Value="False">
+                                    <Setter Property="HeightRequest" Value="0" />
+                                </Trigger>
+                            </Grid.Triggers>
+                            <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" 
+                                       Color="#2196F3" VerticalOptions="Center" 
+                                       HorizontalOptions="Center"/>
+                        </Grid>
+                    </ListView.Footer>
+                </ListView>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

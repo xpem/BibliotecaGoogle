@@ -29,5 +29,12 @@ namespace ML
 
         public string Categories { get; set; }
 
+        public string Status { get; set; }
+
+        public string StatusColor { get; set; }
+
+        public string Avaliacao { get; set; }
+
+
     }
 }
