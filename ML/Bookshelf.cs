@@ -10,11 +10,11 @@ namespace ML
     {
         public class Totais
         {
-            public int Favoritos { get; set; }
-            public int VouLer { get; set; }
-            public int Lendo { get; set; }
-            public int Lidos { get; set; }
+            public int Marcado { get; set; }//
+            public int VouLer { get; set; }//1
+            public int Lendo { get; set; }//2
+            public int Lido { get; set; }//3
+            public int Interrompido { get; set; }//4
         }
-
     }
 }

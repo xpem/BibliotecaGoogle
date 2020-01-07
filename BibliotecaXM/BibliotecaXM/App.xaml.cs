@@ -9,11 +9,10 @@ namespace BibliotecaXM
 {
     public partial class App : Application
     {
-
         public App()
         {
             //BL.DbLite.CriaDb();
-            
+
             InitializeComponent();
 
             //MainPage = new Acessa();
@@ -25,8 +24,6 @@ namespace BibliotecaXM
             };
 
             InitializeComponent();
-
-
         }
 
         protected override void OnStart()

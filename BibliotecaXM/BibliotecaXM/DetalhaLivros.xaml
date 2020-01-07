@@ -18,7 +18,7 @@
                         <Picker x:Name="PkrBiblioteca" SelectedIndexChanged="PkrBiblioteca_SelectedIndexChanged" SelectedIndex="{ Binding VStatus }" HorizontalOptions="Center" VerticalOptions="Start" WidthRequest="150" BackgroundColor="#fff" TextColor="Black" FontSize="15"/>
                         <Label  x:Name="LblSdlrAvaliacao" Text="{Binding Source={x:Reference AvRSldr}, Path=Value, StringFormat='Avaliação pessoal: {0:F0} de 5'}" TextColor="#5D4037" HorizontalTextAlignment="Center" Margin="0, 20, 0, 0" />
                         <Slider x:Name="AvRSldr" Minimum="0" Maximum="5" Value="{ Binding VAvaliacao }" ThumbColor="#efebeb" BackgroundColor="#5D4037" HorizontalOptions="FillAndExpand" />
-                        <Button Text="Confirmar" VerticalOptions="Fill" HorizontalOptions="Center" BackgroundColor="#5b3f36" TextColor="White" x:Name="BtnBuscar" FontSize="Micro" Margin="0,10,0,0" HeightRequest="40" CornerRadius="15" Clicked="BtnBuscar_Clicked" />
+                        <Button Text="Confirmar" VerticalOptions="Fill" HorizontalOptions="Center" BackgroundColor="#5b3f36" TextColor="White" x:Name="BtnConf" FontSize="Micro" Margin="0,10,0,0" HeightRequest="40" CornerRadius="15" Clicked="BtnBuscar_Clicked" />
                     </StackLayout>
                 </Frame>
                 <StackLayout  Orientation="Vertical" BackgroundColor="#F5F5F6" Padding="10" HorizontalOptions="FillAndExpand" VerticalOptions="Fill">

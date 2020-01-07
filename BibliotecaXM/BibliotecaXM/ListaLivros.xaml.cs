@@ -28,7 +28,6 @@ namespace BibliotecaXM
             }
         }
 
-        BL.WsServiceLista ws = new BL.WsServiceLista();
 
         public ListaLivros(string Busca)
         {
@@ -49,8 +48,7 @@ namespace BibliotecaXM
             isLoading = true;
             this.Title = "Loading";
 
-            List<Book> lista = new List<Book>();
-            lista = await ws.WsBusca(Busca, 0, "", indice);
+            List<Book> lista = await BL.WsServiceLista.WsBusca(Busca, 0, "", indice);
 
             if (lista.Count == 0)
             {
@@ -96,8 +94,7 @@ namespace BibliotecaXM
         {
             if (e.SelectedItem != null)
             {
-                Book book = new Book();
-                book = (Book)e.SelectedItem;
+                Book book = (Book)e.SelectedItem;
                 DetalhaLivros detalhaLivros = new DetalhaLivros(book.Id);
                 Navigation.PushAsync(detalhaLivros);
                 LstLivros.SelectedItem = null;

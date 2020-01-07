@@ -24,7 +24,7 @@ namespace BibliotecaXM
             }
         }
 
-        private int vVouLer, vLendo, vLido;
+        private int vVouLer, vLendo, vLido, vInterrompido;
 
         public int VVouLer { get => vVouLer; set { vVouLer = value; OnPropertyChanged(); } }
 
@@ -32,6 +32,7 @@ namespace BibliotecaXM
 
         public int VLido { get => vLido; set { vLido = value; OnPropertyChanged(); } }
 
+        public int VInterrompido { get => vInterrompido; set { vInterrompido = value; OnPropertyChanged(); } }
 
         public MainPage()
         {
@@ -46,7 +47,6 @@ namespace BibliotecaXM
             base.OnAppearing();
 
             CarregaBookshelfTotais();
-
         }
 
         private void BtnVouLer_Clicked(object sender, EventArgs e)
@@ -59,9 +59,14 @@ namespace BibliotecaXM
             this.Navigation.PushAsync(new ListaBookshelf(3));
         }
 
-        private void BtnReading_Clicked(object sender, EventArgs e)
+        private void BtnLendo_Clicked(object sender, EventArgs e)
         {
             this.Navigation.PushAsync(new ListaBookshelf(2));
+        }
+
+        private void BtnInterrompido_Clicked(object sender, EventArgs e)
+        {
+            this.Navigation.PushAsync(new ListaBookshelf(4));
         }
 
         public async void CarregaBookshelfTotais()
@@ -69,7 +74,8 @@ namespace BibliotecaXM
             ML.Bookshelf.Totais totais = await BL.Services.FbBookshelf.GetBookshelfTotais();
             VVouLer = totais.VouLer;
             VLendo = totais.Lendo;
-            VLido = totais.Lidos;
+            VLido = totais.Lido;
+            VInterrompido = totais.Interrompido;
         }
 
         private void BtnBuscar_Clicked(object sender, EventArgs e)

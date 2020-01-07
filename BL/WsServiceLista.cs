@@ -15,13 +15,11 @@ namespace BL
 {
     public class WsServiceLista
     {
-        List<Book> Lista = new List<Book>();
 
         private int Total { get; set; }
 
-        public async Task<List<Book>> WsBusca(string busca, int key, string buscakey, int indice)
+        public async static Task<List<Book>> WsBusca(string busca, int key, string buscakey, int indice)
         {
-           
             StringBuilder urlBusca = new StringBuilder();
             urlBusca.Append($"https://www.googleapis.com/books/v1/volumes?&startIndex={indice}&q=");
             //
@@ -49,50 +47,47 @@ namespace BL
             {
                 using (var http = new HttpClient())
                 {
-                    var requisicao = new HttpRequestMessage();
-                    requisicao.RequestUri = new Uri(urlBusca.ToString());
-                    requisicao.Method = HttpMethod.Get;
+                    HttpRequestMessage requisicao = new HttpRequestMessage
+                    {
+                        RequestUri = new Uri(urlBusca.ToString()),
+                        Method = HttpMethod.Get
+                    };
                     var resposta = await http.SendAsync(requisicao);
                     var conteudo = await resposta.Content.ReadAsStringAsync();
-                    JsonBusca(conteudo.ToString());
+                  return JsonBusca(conteudo.ToString());
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
-            return Lista;
         }
 
-        public void JsonBusca(string json)
+        public static List<Book> JsonBusca(string json)
         {
-            Lista = new List<Book>();
+            List<Book> Lista = new List<Book>();
             dynamic array = JsonConvert.DeserializeObject(json);
-
-            //variaveis utilizadas na criação da lista
-            Book livro = new Book();
-            if(array.totalItems > 0)
-            { 
-            dynamic items = array.items;
-            int itemscount = ((ICollection)array.items).Count;
-            string strbdrarrays = "";
-            IList<string> lstAuthors;
-            string PublishedDate;
-            dynamic volumeInfo;
+            if (array.totalItems > 0)
+            {
+                dynamic items = array.items;
+                int itemscount = ((ICollection)array.items).Count;
+                IList<string> lstAuthors;
+                string PublishedDate;
+                dynamic volumeInfo;
                 //
+                Book livro;
 
                 for (int i = 0; i < itemscount; i++)
                 {
+                    //variaveis utilizadas na criação da lista
                     livro = new Book();
 
-                    livro.Id = items[i].id;
                     volumeInfo = items[i].volumeInfo;
+
+                    livro.Id = items[i].id;
 
                     livro.Title = volumeInfo.title;
 
-                    //if (volumeInfo.ContainsKey("subtitle"))
-                    //{
-                    //    livro.Subtitle = volumeInfo.subtitle;
-                    //}
                     if (volumeInfo.ContainsKey("pageCount"))
                     {
                         livro.PageCount = volumeInfo.pageCount;
@@ -126,7 +121,7 @@ namespace BL
                     if (volumeInfo.ContainsKey("authors"))
                     {
                         lstAuthors = volumeInfo.authors.ToObject<IList<string>>();
-                        strbdrarrays = "";
+                        string strbdrarrays = "";
                         foreach (string itnAuthors in lstAuthors)
                         {
                             if (string.IsNullOrEmpty(strbdrarrays.ToString()))
@@ -141,25 +136,11 @@ namespace BL
                         }
                         livro.Authors = strbdrarrays;
                     }
-
-                    //if (volumeInfo.ContainsKey("categories"))
-                    //{
-
-                    //    lstCategories = volumeInfo.categories.ToObject<IList<string>>();
-                    //    strbdrarrays = new StringBuilder();
-                    //    foreach (string itnCategories in lstCategories)
-                    //    {
-                    //        strbdrarrays.AppendLine(itnCategories);
-                    //    }
-                    //    livro.Categories = strbdrarrays.ToString();
-                    //}
                     Lista.Add(livro);
                 }
+             
             }
-
-            // var teste4 = teste["volumeInfo"]["title"];
-
-
+            return Lista;
         }
 
     }

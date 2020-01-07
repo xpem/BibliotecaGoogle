@@ -13,37 +13,38 @@ namespace BL
 {
     public class WsServiceBook
     {
-        public async Task<Book> WsBook(string id)
+        public async static Task<Book> WsBook(string id)
         {
             string urlBusca = $"https://www.googleapis.com/books/v1/volumes/{id}?key=AIzaSyAiqcLMIbWfBuTJCPA6AuEa-mUcPiZXS4E";
-            Book livro = new Book();
 
             try
             {
                 using (var http = new HttpClient())
                 {
-                    var requisicao = new HttpRequestMessage();
-                    requisicao.RequestUri = new Uri(urlBusca.ToString());
-                    requisicao.Method = HttpMethod.Get;
+                    HttpRequestMessage requisicao = new HttpRequestMessage
+                    {
+                        RequestUri = new Uri(urlBusca.ToString()),
+                        Method = HttpMethod.Get
+                    };
+
                     var resposta = await http.SendAsync(requisicao);
                     var conteudo = await resposta.Content.ReadAsStringAsync();
-                  livro =  JsonBook(conteudo.ToString());
+                    return JsonBook(conteudo.ToString());
                 }
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            return livro;
         }
 
-        public Book JsonBook(string json)
+        public static Book JsonBook(string json)
         {
             dynamic array = JsonConvert.DeserializeObject(json);
 
             //variaveis utilizadas na criação da lista
             Book livro = new Book();
-            StringBuilder strbdrarrays = new StringBuilder();
+
             IList<string> lstAuthors;
             IList<string> lstCategories;
             string PublishedDate;
@@ -103,9 +104,10 @@ namespace BL
                 {
                     livro.Publisher = PublishedDate;
                 }
-              
+
             }
 
+            StringBuilder strbdrarrays;
             if (volumeInfo.ContainsKey("authors"))
             {
                 lstAuthors = volumeInfo.authors.ToObject<IList<string>>();
