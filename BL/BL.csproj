@@ -63,9 +63,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbLite.cs" />
     <Compile Include="Services\FbBookshelf.cs" />
     <Compile Include="Services\FbBook.cs" />
+    <Compile Include="Services\SqLiteLogin.cs" />
     <Compile Include="WsServiceBook.cs" />
     <Compile Include="WsServiceLista.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

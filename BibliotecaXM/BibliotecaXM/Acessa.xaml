@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Padding="0,10,0,0" BackgroundColor="#5d4037"
+             x:Class="BibliotecaXM.Acessa">
+    <ContentPage.Content>
+        <StackLayout Padding="10,5,10,5" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Orientation="Vertical"  >
+            <Frame Margin="10" BorderColor="Wheat" BackgroundColor="#E1E2E1" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" HasShadow="True" CornerRadius="10" >
+                <StackLayout Orientation="Vertical" >
+                    <Label Text="Minha Estante"
+                VerticalOptions="Fill" 
+                HorizontalOptions="Center" TextColor="Black" FontSize="Large" FontAttributes="Bold"/>
+                    <Entry Placeholder="Nome de Acesso"    WidthRequest="250"
+                HorizontalOptions="CenterAndExpand" x:Name="EntNomeAcesso">
+                </Entry>
+                <Entry Placeholder="" IsPassword="True"
+                VerticalOptions="Center" 
+                HorizontalOptions="CenterAndExpand"
+                 WidthRequest="250"  x:Name="EntSenha">
+                </Entry>
+                    <Button Text="Acesse" VerticalOptions="Fill" HorizontalOptions="CenterAndExpand" BackgroundColor="#5b3f36" TextColor="White"  WidthRequest="250" Clicked="Button_Clicked"/>
+                </StackLayout>
+            </Frame>
+        </StackLayout>        
+    </ContentPage.Content>
+</ContentPage>

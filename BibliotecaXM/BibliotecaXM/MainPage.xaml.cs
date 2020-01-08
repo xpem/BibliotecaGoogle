@@ -20,7 +20,6 @@ namespace BibliotecaXM
             {
                 cornerRadius = value;
                 OnPropertyChanged();
-
             }
         }
 
@@ -37,7 +36,6 @@ namespace BibliotecaXM
         public MainPage()
         {
             BindingContext = this;
-
             InitializeComponent();
 
         }
@@ -53,7 +51,7 @@ namespace BibliotecaXM
         {
             this.Navigation.PushAsync(new ListaBookshelf(1));
         }
-        
+
         private void BtnLidos_Clicked(object sender, EventArgs e)
         {
             this.Navigation.PushAsync(new ListaBookshelf(3));
@@ -62,6 +60,14 @@ namespace BibliotecaXM
         private void BtnLendo_Clicked(object sender, EventArgs e)
         {
             this.Navigation.PushAsync(new ListaBookshelf(2));
+        }
+
+        private void TbiSair_Clicked(object sender, EventArgs e)
+        {
+            BL.Services.SqLiteLogin.DelAcesso();
+            Acessa pag = new Acessa();
+            Application.Current.MainPage = new Acessa();
+            Navigation.PushModalAsync(pag);
         }
 
         private void BtnInterrompido_Clicked(object sender, EventArgs e)
@@ -80,8 +86,6 @@ namespace BibliotecaXM
 
         private void BtnBuscar_Clicked(object sender, EventArgs e)
         {
-            BL.Services.FbBook fbServices = new BL.Services.FbBook();
-
             if (!string.IsNullOrEmpty(EntBusca.Text))
             {
                 BtnBuscar.IsEnabled = false;

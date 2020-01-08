@@ -25,6 +25,11 @@ namespace BL.Services
             return await AL.AcessoFb.GetBookStatus(1, IdBook);
         }
 
+        public async static void DeleteBookStatus(string Key)
+        {
+           await Task.Run(() => AL.AcessoFb.DeleteBookStatus(Key));
+        }
+
 
     }
 }

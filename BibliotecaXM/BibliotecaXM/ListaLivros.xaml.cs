@@ -16,7 +16,7 @@ namespace BibliotecaXM
     public partial class ListaLivros : ContentPage
     {
         public ObservableCollection<Book> Itenslista;
-        bool isLoading;
+        private bool isLoading;
 
         public bool IsLoading
         {
@@ -39,8 +39,8 @@ namespace BibliotecaXM
 
             LstLivros.ItemsSource = Itenslista;
 
-           CarregaLista(Busca, indice);
-           CarregaFuncaoSelecao(Busca, indice);
+            CarregaLista(Busca, indice);
+            CarregaFuncaoSelecao(Busca, indice);
         }
 
         private async void CarregaLista(string Busca, int indice)
@@ -71,7 +71,7 @@ namespace BibliotecaXM
                 this.Title = "Done";
                 isLoading = false;
             }
-            
+
         }
 
         private void CarregaFuncaoSelecao(string Busca, int indice)

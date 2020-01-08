@@ -71,6 +71,11 @@ namespace AL
               .PutAsync(new BookStatus() { IdUsuario = vIdUsuario, IdBook = vIdBook, Status = vStatus, Avaliacao = vAvaliacao });
         }
 
+        public async static void DeleteBookStatus(string vKey)
+        {
+            await firebase.Child("BookStatus").Child(vKey).DeleteAsync();
+        }
+
     }
 
 

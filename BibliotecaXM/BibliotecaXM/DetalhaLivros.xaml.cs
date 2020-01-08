@@ -18,7 +18,7 @@ namespace BibliotecaXM
         private static string IdBook, Key;
         //itens que são carregados de forma assincrona
         #region variaveis do bind.
-        public string thumbnail, vTitle, vSubtitle, vDescription, vAuthors, vPageCount, 
+        public string thumbnail, vTitle, vSubtitle, vDescription, vAuthors, vPageCount,
             vPublisher, vCategories, vStatus, vAvaliacao;
         public string Thumbnail
         {
@@ -250,13 +250,16 @@ namespace BibliotecaXM
 
                     if (string.IsNullOrEmpty(Key))
                     {
-                        
                         BL.Services.FbBook.AddBookStatus(IdBook, PkrBiblioteca.SelectedIndex, avaliacao);
-                        
                     }
                     else
                     {
-                        BL.Services.FbBook.UpdateBookStatus(Key, IdBook, PkrBiblioteca.SelectedIndex, avaliacao);
+                        if (PkrBiblioteca.SelectedIndex == 0)
+                        {
+                            BL.Services.FbBook.DeleteBookStatus(Key);
+                        }
+                        else
+                            BL.Services.FbBook.UpdateBookStatus(Key, IdBook, PkrBiblioteca.SelectedIndex, avaliacao);
                     }
 
                     AvRSldr.IsVisible = BtnConf.IsVisible = false;

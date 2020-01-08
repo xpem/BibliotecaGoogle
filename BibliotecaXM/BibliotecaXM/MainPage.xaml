@@ -3,8 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:BibliotecaXM"
              x:Class="BibliotecaXM.MainPage"
-             Title="Home"
+             Title="Minha Estante"              
              Padding="0,10,0,0" BackgroundColor="#5d4037">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="TbiSair" Order="Secondary"  Text="Sair" Priority="0"  Clicked="TbiSair_Clicked"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Padding="10,5,10,5" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Orientation="Vertical"  >
             <Frame Margin="10" BorderColor="Wheat" BackgroundColor="#E1E2E1" HorizontalOptions="FillAndExpand" HasShadow="True" CornerRadius="10" >
@@ -19,9 +22,9 @@
             <ScrollView>
                 <Frame Margin="10" BorderColor="Wheat" BackgroundColor="#E1E2E1" HorizontalOptions="FillAndExpand" HasShadow="True" CornerRadius="10" >
                     <StackLayout Orientation="Vertical" >
-                        <Label Text="Minha Estante"
+                        <!--<Label Text="{Binding VLogin}"
                 VerticalOptions="Fill" 
-                HorizontalOptions="Center" TextColor="Black" FontSize="Large" FontAttributes="Bold"/>
+                HorizontalOptions="Start" TextColor="Black" FontSize="20" FontAttributes="Italic"/>-->
                             <Button Text="{Binding VVouLer,StringFormat='Vou Ler ({0})'}" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" BackgroundColor="#439889" TextColor="Black" 
                             x:Name="BtnVouLer" FontSize="Medium" Margin="10, 10, 10, 10" CornerRadius="10" Clicked="BtnVouLer_Clicked" />
                             <Button Text="{Binding VLendo,StringFormat='Lendo ({0})'}" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" BackgroundColor="#00695c" TextColor="White"

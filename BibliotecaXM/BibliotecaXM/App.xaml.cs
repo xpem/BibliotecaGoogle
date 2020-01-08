@@ -1,6 +1,7 @@
 ﻿using SQLite;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,17 +12,28 @@ namespace BibliotecaXM
     {
         public App()
         {
-            //BL.DbLite.CriaDb();
+            BL.Services.SqLiteLogin.CriaBD();
 
             InitializeComponent();
 
-            //MainPage = new Acessa();
-            MainPage = new MainPage();
-            MainPage = new NavigationPage(new MainPage())
+
+            if (BL.Services.SqLiteLogin.VerificaAcesso())
             {
-                BarBackgroundColor = Color.FromHex("#301810"),
-                BarTextColor = Color.White
-            };
+                //MainPage = new Acessa();
+                MainPage = new MainPage();
+                MainPage = new NavigationPage(new MainPage())
+                {
+                    BarBackgroundColor = Color.FromHex("#301810"),
+                    BarTextColor = Color.White
+                };
+            }
+            else
+            {
+                MainPage = new Acessa();
+            }
+
+
+
 
             InitializeComponent();
         }

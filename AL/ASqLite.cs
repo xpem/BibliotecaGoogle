@@ -1,0 +1,26 @@
+﻿using SQLite;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ML;
+
+namespace AL
+{
+    /// <summary>
+    /// Considerei deixar os métodos de acesso ao banco local como sincronos, pois preciso dos dados dele para acessar os metodos asincronos posteriores
+    /// </summary>
+    public class ASqLite
+    {
+        protected readonly static SQLiteAsyncConnection _database = new SQLiteAsyncConnection(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Bookshelf.db3"));
+
+        public static void CriaDb() => _database.ExecuteAsync("create table if not exists ACESSADD (ID integer primary key autoincrement, CODIGO integer, LOGINNOME text)");
+
+        public static void CadastraAcesso(string id, string login) => _database.ExecuteAsync($"insert into ACESSADD (CODIGO,LOGINNOME) values ('{id}','{login}')");
+
+        public static void DelAcesso() => _database.ExecuteAsync($"delete from ACESSADD");
+
+        public static Task<List<Login>> RecAcesso() => _database.QueryAsync<ML.Login>("select CODIGO,LOGINNOME from ACESSADD");
+    }
+}

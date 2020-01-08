@@ -13,12 +13,14 @@ namespace BL.Services
 
         public async static Task<Bookshelf.Totais> GetBookshelfTotais()
         {
-            return await AL.ABookshelf.GetBookshelfTotais(1);
+            ML.Login login = BL.Services.SqLiteLogin.RecAcesso();
+            return await AL.ABookshelf.GetBookshelfTotais(login.Codigo);
         }
 
-        public async static Task<List<BookStatus>> GetUserBookStatusByStatus(int Status,int index)
+        public async static Task<List<BookStatus>> GetUserBookStatusByStatus(int Status,int index,int LoginCodigo)
         {
-            List<BookStatus> lista = await AL.AcessoFb.GetUserBookStatusByStatus(Status, 1);
+
+            List<BookStatus> lista = await AL.AcessoFb.GetUserBookStatusByStatus(Status, LoginCodigo);
             Total = lista.Count();
 
             if (Total > (index + 10))
