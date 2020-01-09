@@ -21,19 +21,36 @@ namespace BibliotecaXM
         {
             if (!string.IsNullOrEmpty(EntNomeAcesso.Text) && !string.IsNullOrEmpty(EntSenha.Text))
             {
-                if (EntSenha.Text.Length > 4)
+                if (EntSenha.Text.Length > 3)
                 {
-                    BL.Services.SqLiteLogin.CadatraAcesso("1", "Emanuel Martins");
+                    BtnCadAcesso.IsEnabled = false;
+                    bool resp = false;
+                    Task.Run(async () => resp = await BL.Services.FbLogin.RecuperaUsuario(EntNomeAcesso.Text, EntSenha.Text)).Wait();
 
-
-                    Application.Current.MainPage = new MainPage();
-                    Application.Current.MainPage = new NavigationPage(new MainPage())
+                    if (resp)
                     {
-                        BarBackgroundColor = Color.FromHex("#301810"),
-                        BarTextColor = Color.White
-                    };
+                        Application.Current.MainPage = new MainPage();
+                        Application.Current.MainPage = new NavigationPage(new MainPage())
+                        {
+                            BarBackgroundColor = Color.FromHex("#301810"),
+                            BarTextColor = Color.White
+                        };
+                    }else
+                    {
+                        DisplayAlert("Aviso", "Usuário/senha incorretos", null, "Ok");
+                    }
+                    BtnCadAcesso.IsEnabled = true;
+                }
+                else
+                {
+                    DisplayAlert("Aviso", "Digite sua senha", null, "Ok");
                 }
             }
+        }
+
+        private void BtnCadAcesso_Clicked(object sender, EventArgs e)
+        {
+            this.Navigation.PushModalAsync(new CadastraUsuario());
         }
     }
 }

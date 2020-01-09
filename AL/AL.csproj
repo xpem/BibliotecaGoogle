@@ -85,6 +85,7 @@
     <Compile Include="AcessoFb.cs" />
     <Compile Include="ABookshelf.cs" />
     <Compile Include="ASqLite.cs" />
+    <Compile Include="AUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

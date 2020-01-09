@@ -12,10 +12,10 @@ namespace BibliotecaXM
     {
         public App()
         {
+
             BL.Services.SqLiteLogin.CriaBD();
 
             InitializeComponent();
-
 
             if (BL.Services.SqLiteLogin.VerificaAcesso())
             {
@@ -31,9 +31,6 @@ namespace BibliotecaXM
             {
                 MainPage = new Acessa();
             }
-
-
-
 
             InitializeComponent();
         }

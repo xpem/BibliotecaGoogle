@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Plugin.Connectivity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -43,7 +44,6 @@ namespace BibliotecaXM
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
             CarregaBookshelfTotais();
         }
 
@@ -77,11 +77,17 @@ namespace BibliotecaXM
 
         public async void CarregaBookshelfTotais()
         {
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                await DisplayAlert("Aviso", "Sem conexão com a internet", null, "Ok");
+                return;
+            }
             ML.Bookshelf.Totais totais = await BL.Services.FbBookshelf.GetBookshelfTotais();
-            VVouLer = totais.VouLer;
-            VLendo = totais.Lendo;
-            VLido = totais.Lido;
-            VInterrompido = totais.Interrompido;
+                VVouLer = totais.VouLer;
+                VLendo = totais.Lendo;
+                VLido = totais.Lido;
+                VInterrompido = totais.Interrompido;
+            
         }
 
         private void BtnBuscar_Clicked(object sender, EventArgs e)
@@ -89,9 +95,7 @@ namespace BibliotecaXM
             if (!string.IsNullOrEmpty(EntBusca.Text))
             {
                 BtnBuscar.IsEnabled = false;
-
                 string Busca = EntBusca.Text;
-
                 this.Navigation.PushAsync(new ListaLivros(Busca));
                 BtnBuscar.IsEnabled = true;
             }
@@ -99,7 +103,6 @@ namespace BibliotecaXM
             {
                 DisplayAlert("Aviso", "Digite um texto para a busca", null, "Ok");
             }
-
         }
     }
 }

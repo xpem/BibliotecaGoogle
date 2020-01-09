@@ -1,10 +1,7 @@
 ﻿using BL;
 using ML;
-using System;
-using System.Collections.Generic;
+using Plugin.Connectivity;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
@@ -16,7 +13,7 @@ namespace BibliotecaXM
     public partial class ListaBookshelf : ContentPage
     {
         public ObservableCollection<Book> ItensBookLista;
-       
+
         private bool isLoading;
         public bool IsLoading { get => isLoading; set { isLoading = value; OnPropertyChanged(); } }
 
@@ -26,7 +23,7 @@ namespace BibliotecaXM
         /// status de livro repassado da Main.
         /// </summary>
         private int StatusBookIndex { get; set; }
-      
+
         public ListaBookshelf(int Status)
         {
             BindingContext = this;
@@ -42,12 +39,18 @@ namespace BibliotecaXM
         }
         private async void CarregaLista()
         {
-            this.Title = "Loading";
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                await DisplayAlert("Aviso", "Sem conexão com a internet", null, "Ok");
+                return;
+            }
+
+            this.Title = "Carregando lista...";
             IsLoading = true;
             Book book;
-            ML.Login login = BL.Services.SqLiteLogin.RecAcesso();
+            ML.User login = BL.Services.SqLiteLogin.RecAcesso();
 
-            foreach (BookStatus bookStatus in (await BL.Services.FbBookshelf.GetUserBookStatusByStatus(StatusBookIndex, indice,login.Codigo)))
+            foreach (BookStatus bookStatus in (await BL.Services.FbBookshelf.GetUserBookStatusByStatus(StatusBookIndex, indice, login.Key)))
             {
                 book = await WsServiceBook.WsBook(bookStatus.IdBook);
                 switch (bookStatus.Status)
@@ -73,13 +76,19 @@ namespace BibliotecaXM
                 ItensBookLista.Add(book);
             }
 
-            this.Title = "Done";
+            this.Title = "Estante";
             IsLoading = false;
         }
 
 
-        private void CarregaFuncaoSelecao()
+        private async void CarregaFuncaoSelecao()
         {
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                await DisplayAlert("Aviso", "Sem conexão com a internet", null, "Ok");
+                return;
+            }
+
             LstLivros.ItemAppearing += (sender, e) =>
             {
                 if (BL.Services.FbBookshelf.Total > 10)
@@ -104,7 +113,7 @@ namespace BibliotecaXM
             {
                 Book book = (Book)e.SelectedItem;
                 DetalhaLivros detalhaLivros = new DetalhaLivros(book.Id);
-                
+
                 //atualiza o item com o retorno à esta view
                 detalhaLivros.Disappearing += async (sender2, e2) =>
                 {
@@ -117,7 +126,7 @@ namespace BibliotecaXM
                         book.Avaliacao = $"Avaliação: {novobookStatus.Avaliacao} de 5";
                         ItensBookLista[index] = book;
                     }
-                    else
+                    else if (StatusBookIndex != novobookStatus.Status)
                         ItensBookLista.RemoveAt(ItensBookLista.IndexOf(book));
                 };
 

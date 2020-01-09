@@ -12,54 +12,46 @@ namespace AL
 {
     public class AcessoFb
     {
-       public static FirebaseClient firebase = new FirebaseClient("https://mylibrary-20954.firebaseio.com/");
+        public static FirebaseClient firebase = new FirebaseClient("https://mylibrary-20954.firebaseio.com/");
 
-        public async static void AddUserBookStatus(int vIdUsuario,string vIdBook,int vStatus,int vAvaliacao )
+        #region bookstatus
+        public async static void AddUserBookStatus(string vKeyUsuario, string vIdBook, int vStatus, int vAvaliacao)
         {
             await firebase
               .Child("BookStatus")
-              .PostAsync(new BookStatus() { IdUsuario = vIdUsuario, IdBook= vIdBook, Status = vStatus, Avaliacao=vAvaliacao });
+              .PostAsync(new BookStatus() { KeyUsuario = vKeyUsuario, IdBook = vIdBook, Status = vStatus, Avaliacao = vAvaliacao });
         }
 
-        public async static Task<BookStatus> GetBookStatus(int vIdUsuario,string vIdBook)
+        public async static Task<BookStatus> GetBookStatus(string vKeyUsuario, string vIdBook)
         {
-
-            List<BookStatus> allBookStatus = await GetAllUserBookStatus();
             await firebase
               .Child("BookStatus")
               .OnceAsync<BookStatus>();
-            return allBookStatus.Where(a => a.IdUsuario == vIdUsuario && a.IdBook == vIdBook).FirstOrDefault();
+            return (await firebase.Child("BookStatus").OnceAsync<BookStatus>()).Where(a => a.Object.KeyUsuario == vKeyUsuario && a.Object.IdBook == vIdBook).Select(item => new BookStatus
+            {
+                Key = item.Key,
+                IdBook = item.Object.IdBook,
+                KeyUsuario = item.Object.KeyUsuario,
+                Status = item.Object.Status,
+                Avaliacao = item.Object.Avaliacao
+            }).FirstOrDefault();
         }
 
-        public async static Task<List<BookStatus>> GetAllUserBookStatus()
+        public async static Task<List<BookStatus>> GetUserBookStatusByStatus(int vStatus, string vKeyuser)
         {
             return (await firebase
               .Child("BookStatus")
-              .OnceAsync<BookStatus>()).Select(item => new BookStatus
+              .OnceAsync<BookStatus>()).Where(a => a.Object.KeyUsuario == vKeyuser && a.Object.Status == vStatus).Select(item => new BookStatus
               {
                   Key = item.Key,
                   IdBook = item.Object.IdBook,
-                  IdUsuario = item.Object.IdUsuario,
+                  KeyUsuario = item.Object.KeyUsuario,
                   Status = item.Object.Status,
                   Avaliacao = item.Object.Avaliacao
               }).ToList();
         }
 
-        public async static Task<List<BookStatus>> GetUserBookStatusByStatus(int vStatus,int vIdusuario)
-        {
-            return (await firebase
-              .Child("BookStatus")
-              .OnceAsync<BookStatus>()).Where(a => a.Object.IdUsuario == vIdusuario && a.Object.Status == vStatus).Select(item => new BookStatus
-              {
-                  Key = item.Key,
-                  IdBook = item.Object.IdBook,
-                  IdUsuario = item.Object.IdUsuario,
-                  Status = item.Object.Status,
-                  Avaliacao = item.Object.Avaliacao
-              }).ToList();
-        }
-
-        public async static void UpdateBookStatus(string vKey, int vIdUsuario, string vIdBook, int vStatus, int vAvaliacao)
+        public async static void UpdateBookStatus(string vKey, string vKeyUsuario, string vIdBook, int vStatus, int vAvaliacao)
         {
             var toUpdateBookStatus = (await firebase
               .Child("BookStatus")
@@ -68,13 +60,18 @@ namespace AL
             await firebase
               .Child("BookStatus")
               .Child(toUpdateBookStatus.Key)
-              .PutAsync(new BookStatus() { IdUsuario = vIdUsuario, IdBook = vIdBook, Status = vStatus, Avaliacao = vAvaliacao });
+              .PutAsync(new BookStatus() { KeyUsuario = vKeyUsuario, IdBook = vIdBook, Status = vStatus, Avaliacao = vAvaliacao });
         }
 
         public async static void DeleteBookStatus(string vKey)
         {
             await firebase.Child("BookStatus").Child(vKey).DeleteAsync();
         }
+
+        #endregion
+
+       
+
 
     }
 

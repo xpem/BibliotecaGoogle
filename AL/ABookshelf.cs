@@ -15,14 +15,14 @@ namespace AL
         /// </summary>
         /// <param name="IdUsuario"></param>
         /// <returns></returns>
-        public async static Task<Bookshelf.Totais> GetBookshelfTotais(int IdUsuario)
+        public async static Task<Bookshelf.Totais> GetBookshelfTotais(string KeyUsuario)
         {
             Bookshelf.Totais BTotais = new Bookshelf.Totais();
 
             //obtenho a lista geral(pois não consegui obter uma lista de counts independentes)
             List<BookStatus> lista = ((await AcessoFb.firebase
               .Child("BookStatus")
-              .OnceAsync<BookStatus>()).Where(a => a.Object.IdUsuario == IdUsuario).Select(obj => new BookStatus{ Status = obj.Object.Status})).ToList();
+              .OnceAsync<BookStatus>()).Where(a => a.Object.KeyUsuario == KeyUsuario).Select(obj => new BookStatus{ Status = obj.Object.Status})).ToList();
 
             //aqui filtro na lista counts por status
             BTotais.VouLer = lista.Where(a => a.Status == 1).Count();         

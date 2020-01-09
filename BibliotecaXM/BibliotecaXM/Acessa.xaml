@@ -22,6 +22,7 @@
                  WidthRequest="250"  x:Name="EntSenha">
                 </Entry>
                     <Button Text="Acesse" VerticalOptions="Fill" HorizontalOptions="CenterAndExpand" BackgroundColor="#5b3f36" TextColor="White"  WidthRequest="250" Clicked="Button_Clicked"/>
+                    <Button Text="Cadastrar Acesso" x:Name="BtnCadAcesso" VerticalOptions="Fill" HorizontalOptions="CenterAndExpand" BackgroundColor="#439889" TextColor="Black"  WidthRequest="250" Clicked="BtnCadAcesso_Clicked"/>
                 </StackLayout>
             </Frame>
         </StackLayout>        

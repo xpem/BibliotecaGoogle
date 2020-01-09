@@ -11,23 +11,25 @@ namespace BL.Services
     {
         public async static void AddBookStatus(string IdBook, int Status, int Avaliacao)
         {
-            //fixei o usuario como teste
-            await Task.Run(() => AL.AcessoFb.AddUserBookStatus(1, IdBook, Status, Avaliacao));
+            ML.User login = BL.Services.SqLiteLogin.RecAcesso();
+            await Task.Run(() => AL.AcessoFb.AddUserBookStatus(login.Key, IdBook, Status, Avaliacao));
         }
 
         public async static void UpdateBookStatus(string Key, string IdBook, int Status, int Avaliacao)
         {
-         await Task.Run(() => AL.AcessoFb.UpdateBookStatus(Key, 1, IdBook, Status, Avaliacao));
+            ML.User login = BL.Services.SqLiteLogin.RecAcesso();
+            await Task.Run(() => AL.AcessoFb.UpdateBookStatus(Key, login.Key, IdBook, Status, Avaliacao));
         }
 
         public async static Task<BookStatus> GetBookStatus(string IdBook)
         {
-            return await AL.AcessoFb.GetBookStatus(1, IdBook);
+            ML.User login = BL.Services.SqLiteLogin.RecAcesso();
+            return await AL.AcessoFb.GetBookStatus(login.Key, IdBook);
         }
 
         public async static void DeleteBookStatus(string Key)
         {
-           await Task.Run(() => AL.AcessoFb.DeleteBookStatus(Key));
+            await Task.Run(() => AL.AcessoFb.DeleteBookStatus(Key));
         }
 
 

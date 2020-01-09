@@ -1,5 +1,6 @@
 ﻿using BL;
 using ML;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -149,6 +150,12 @@ namespace BibliotecaXM
 
         private async void CarregaBook(string id)
         {
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                await DisplayAlert("Aviso", "Sem conexão com a internet", null, "Ok");
+                return;
+            }
+
             Book book = await WsServiceBook.WsBook(id);
 
             Thumbnail = book.Thumbnail;
@@ -170,6 +177,12 @@ namespace BibliotecaXM
 
         private async void CarregaBookStatus(string id)
         {
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                await DisplayAlert("Aviso", "Sem conexão com a internet", null, "Ok");
+                return;
+            }
+
             BookStatus bookStatus = await BL.Services.FbBook.GetBookStatus(id);
 
             if (bookStatus != null)
@@ -218,6 +231,12 @@ namespace BibliotecaXM
 
         private void BtnBuscar_Clicked(object sender, EventArgs e)
         {
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                DisplayAlert("Aviso", "Sem conexão com a internet", null, "Ok");
+                return;
+            }
+            //
             if (DessabilitaItensAlteracao)
             {
                 PkrBiblioteca.IsEnabled = LblSdlrAvaliacao.IsEnabled = true;
@@ -230,7 +249,7 @@ namespace BibliotecaXM
             else
             {
 
-                this.Title = "Loading";
+                this.Title = "Carregando...";
                 BtnConf.IsEnabled = false;
                 int avaliacao = 0;
                 bool alterou = false;
@@ -263,7 +282,7 @@ namespace BibliotecaXM
                     }
 
                     AvRSldr.IsVisible = BtnConf.IsVisible = false;
-                    this.Title = "Done";
+                    this.Title = "Livro";
                 }
                 else
                 {

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="BibliotecaXM.CadastraUsuario"
+             Title="Minha Estante"              
+             Padding="0,10,0,0" BackgroundColor="#5d4037">
+    <ContentPage.Content>
+        <StackLayout Padding="10,5,10,5" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Orientation="Vertical"  >
+                <Frame Margin="10" BorderColor="Wheat" BackgroundColor="#E1E2E1" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HasShadow="True" CornerRadius="10" >
+                    <StackLayout Orientation="Vertical" >
+                    <Label Text="Minha Estante"
+                VerticalOptions="Fill" 
+                HorizontalOptions="Center" TextColor="Black" FontSize="Large" FontAttributes="Bold"/>
+                    <Label Text="Cadastro de Usuário"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="Start" TextColor="Black" FontSize="20" FontAttributes="Bold"/>
+                     
+                        <Entry Placeholder="Nome"    WidthRequest="250"
+                HorizontalOptions="CenterAndExpand" x:Name="EntNome" MaxLength="100"/>
+                        <Entry Placeholder="Email"    WidthRequest="250"
+                HorizontalOptions="CenterAndExpand" x:Name="EntEmail" MaxLength="150" />
+                        <Entry Placeholder="Nome de Acesso"    WidthRequest="250"
+                HorizontalOptions="CenterAndExpand" x:Name="EntNomeAcesso" MaxLength="50" />
+                    <Entry Placeholder="Senha" IsPassword="True"
+                VerticalOptions="Center" 
+                HorizontalOptions="CenterAndExpand"
+                 WidthRequest="250"  x:Name="EntSenha" MaxLength="10" />
+                    <Entry Placeholder="Confirmação da senha" IsPassword="True"
+                VerticalOptions="Center" 
+                HorizontalOptions="CenterAndExpand"
+                 WidthRequest="250"  x:Name="EntConfSenha" MaxLength="10">
+                        </Entry>
+                    <Button Text="Cadastrar" VerticalOptions="Fill" HorizontalOptions="CenterAndExpand" BackgroundColor="#5b3f36" TextColor="White"  WidthRequest="250" x:Name="BtnCadastrar" Clicked="BtnCadastrar_Clicked" />
+                    <Button Text="Voltar" VerticalOptions="Fill" HorizontalOptions="CenterAndExpand" BackgroundColor="#439889" TextColor="White"  WidthRequest="250" x:Name="BtnVoltar" Clicked="BtnVoltar_Clicked"  />
+                </StackLayout>
+                </Frame>
+            </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

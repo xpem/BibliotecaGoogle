@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Services\FbBookshelf.cs" />
     <Compile Include="Services\FbBook.cs" />
+    <Compile Include="Services\FbLogin.cs" />
     <Compile Include="Services\SqLiteLogin.cs" />
     <Compile Include="WsServiceBook.cs" />
     <Compile Include="WsServiceLista.cs" />

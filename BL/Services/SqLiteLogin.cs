@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ML;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace BL.Services
 
         public static bool VerificaAcesso()
         {
-            List<ML.Login> res = new List<ML.Login>();
+            List<ML.User> res = new List<ML.User>();
             Task.Run(async () => res = await AL.ASqLite.RecAcesso()).Wait();
 
             if (res.Count > 0)
@@ -29,9 +30,9 @@ namespace BL.Services
             AL.ASqLite.CadastraAcesso(id, login);
         }
 
-        public static ML.Login RecAcesso()
+        public static ML.User RecAcesso()
         {
-            List<ML.Login> res = new List<ML.Login>();
+            List<User> res = new List<ML.User>();
             Task.Run(async () => res = await AL.ASqLite.RecAcesso()).Wait();
             return res[0];
         }
