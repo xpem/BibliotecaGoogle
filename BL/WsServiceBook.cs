@@ -15,7 +15,7 @@ namespace BL
     {
         public async static Task<Book> WsBook(string id)
         {
-            string urlBusca = $"https://www.googleapis.com/books/v1/volumes/{id}?key=AIzaSyAiqcLMIbWfBuTJCPA6AuEa-mUcPiZXS4E";
+            string urlBusca = $"https://www.googleapis.com/books/v1/volumes/{id}?key=<Key>";
 
             try
             {

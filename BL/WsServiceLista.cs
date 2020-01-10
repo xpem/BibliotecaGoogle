@@ -42,7 +42,7 @@ namespace BL
                     break;
             }
 
-            urlBusca.Append("&langRestrict=pt&key=AIzaSyAiqcLMIbWfBuTJCPA6AuEa-mUcPiZXS4E");
+            urlBusca.Append("&langRestrict=pt&key=<key>");
             try
             {
                 using (var http = new HttpClient())
